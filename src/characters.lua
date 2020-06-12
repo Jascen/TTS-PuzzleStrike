@@ -101,7 +101,6 @@ function selectChar(player)
             end
 
             closeCharacterSelection(player)
-            Global.call(string, player)
         end
     end
 
@@ -126,10 +125,6 @@ function selectCharacter(player)
         local character = characters[name]
         if character ~= nil then inspectCharacter(player, character, name) end
     end
-end
-
-function tryAdd(key, table)
-    if not table[key] then table[key] = true end
 end
 
 function closeCharacterSelection(player)
