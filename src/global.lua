@@ -17,7 +17,7 @@ player_data = {
     Blue = {pile = 0, hand = 0, discard = 0, bag = 0}
 }
 
-interfaces = {Scoreboard = {Purple = {visible = true}, Red = {visible = true}, Green = {visible = true}, Blue = {visible = true}}}
+show = {Scoreboard = {Purple = {visible = true}, Red = {visible = true}, Green = {visible = true}, Blue = {visible = true}}}
 
 bank_zone = "d0169e"
 
@@ -480,6 +480,12 @@ end
 ----- ?????
 
 function onLoad(save_state)
+    local bank_pool_bag = getObjectFromGUID("6b6799")
+    bank_pool_bag.interactable = false
+
+    local setup_bag = getObjectFromGUID("5e08f3")
+    setup_bag.interactable = false
+
     -- Backgrounds for chips
     for _, id in ipairs(placeholders) do getObjectFromGUID(id).interactable = false end
 
@@ -553,7 +559,7 @@ end
 
 -- UI - Scoreboard --
 function minimizeScoreboard(player)
-    showForPlayer(player, "Scoreboard_content", interfaces["Scoreboard"])
+    showForPlayer(player, "Scoreboard_content", show["Scoreboard"])
 end
 
 function showForPlayer(player, panel, shown)

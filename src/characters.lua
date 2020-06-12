@@ -24,7 +24,7 @@ characters["Valerie Rose"] = {id = "valerie_rose", description = "Drawpower & Ge
 characters["Vendetta"] = {id = "vendetta", description = "Orb Disruption & Hand Disruption", chips = {"7669c7", "f93f74", "b55301"}}
 
 function onLoad(save_state)
-    -- Build the Name to Index character map
+    -- Build the Name to Index charcter map
     character_map = {}
     local i = 1
     for k, character in pairs(characters) do
@@ -32,6 +32,9 @@ function onLoad(save_state)
         character.index = i
         i = i + 1
     end
+
+    local character_bag = getObjectFromGUID("87a183")
+    character_bag.interactable = false
 end
 
 function nextChar(player)
