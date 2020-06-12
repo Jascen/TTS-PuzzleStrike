@@ -1,0 +1,382 @@
+<Defaults>
+    <Text color="#FAFAFA"/>
+    <Button color="#828282"/>
+    <Image preserveAspect="true"/>
+
+    <!-- Defining the standard appearance of the window -->
+    <Panel class="Window" rectAlignment="Middle" returnToOriginalPositionWhenReleased="false" allowDragging="true" outline="rgba(0, 0, 0, 0.95)" />
+    <Panel class="TopBar" height="30" color="rgba(0,0,0,0.95)" rectAlignment="UpperCenter" />
+    <Button class="minimizeButton" width="20" height="20" rectAlignment="UpperRight" offsetXY="-25 -5" text="_" color="#eeeeee" textColor="#000000"/>
+    <Button class="closeButton" width="20" height="20" rectAlignment="UpperRight" offsetXY="-5 -5" color="#990000" textColor="#FFFFFF" text="X" />
+    <Text class="WindowTitle" fontSize="18" height="20" offsetXY="0 -5" rectAlignment="UpperCenter" color="#FFFFFF" />
+
+
+    <!-- Defining the standard appearance of a toolbar button -->
+    <Button class="toolManagerButton" width="90" height="50" tooltipPosition="Left" />
+</Defaults>
+
+<!-- Scoreboard Window -->
+<Panel id="Scoreboard" class="Window" width="300" height="180" rectAlignment="UpperLeft" offsetXY="130 0">
+    <Panel class="TopBar" width="300"/>
+    <Text class="WindowTitle">Scoreboard</Text>
+    <Button class="minimizeButton" onClick="minimizeScoreboard" offsetXY="-5 -5"/>
+
+    <Panel id="Scoreboard_content" offsetXY="0 -30">
+        <TableLayout width="300" height="150" rectAlignment="UpperRight" cellPadding="5" color="#69696940">
+            <Row dontUseTableRowBackground="true" color="rgba(0,0,0,0.95)">
+                <Cell columnSpan="2">
+                    <Text text="Player" />
+                </Cell>
+                <Cell>
+                    <Text text="Pile" />
+                </Cell>
+                <Cell>
+                    <Text text="Hand" />
+                </Cell>
+                <Cell>
+                    <Text text="Deck" />
+                </Cell>
+            </Row>
+            <Row id="Purple" active="false">
+                <Cell columnSpan="2">
+                    <Text id="Purple_name" text="Purple" />
+                </Cell>
+                <Cell>
+                    <Text id="Purple_pile" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Purple_hand" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Purple_deck" text="0" />
+                </Cell>
+            </Row>
+            <Row id="Red" active="false">
+                <Cell columnSpan="2">
+                    <Text id="Red_name" text="Red" />
+                </Cell>
+                <Cell>
+                    <Text id="Red_pile" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Red_hand" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Red_deck" text="0" />
+                </Cell>
+            </Row>
+            <Row id="Green" active="false">
+                <Cell columnSpan="2">
+                    <Text id="Green_name" text="Green" />
+                </Cell>
+                <Cell>
+                    <Text id="Green_pile" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Green_hand" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Green_deck" text="0" />
+                </Cell>
+            </Row>
+            <Row id="Blue" active="false">
+                <Cell columnSpan="2">
+                    <Text id="Blue_name" text="Blue" />
+                </Cell>
+                <Cell>
+                    <Text id="Blue_pile" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Blue_hand" text="0" />
+                </Cell>
+                <Cell>
+                    <Text id="Blue_deck" text="0" />
+                </Cell>
+            </Row>
+        </TableLayout>
+    </Panel>
+</Panel>
+<!-- Scoreboard Window -->
+
+<!-- Game Mode Window -->
+<Panel id="NewGame" class="Window" width="200" height="80" visibility="host" rectAlignment="UpperRight" offsetXY="-250 -10" color="#69696940">
+    <Panel class="TopBar" width="200"/>
+    <Text class="WindowTitle">New Game</Text>
+
+    <Panel offsetXY="0 -5">
+        <Button onClick="selectMode_FirstGame" text="First Game" height="20" />
+        <Button onClick="selectMode_Random" text="Random" height="20" offsetXY="0 -20" />
+    </Panel>
+</Panel>
+<!-- Game Mode Window -->
+
+<!-- Tool Manager Window -->
+<Panel id="ToolManager" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
+    <Panel class="TopBar" width="110"/>
+    <Text class="WindowTitle">Tools</Text>
+
+    <Panel id="ToolManager_content" width="90" offsetXY="0 75">
+        <Button onClick="discardHand" height="50" tooltipPosition="Left" tooltip="Discard your hand">
+            <Image image="minus" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Discard</Text>
+        </Button>
+
+        <Button onClick="drawMaxHand" height="50" offsetXY="0 -60" tooltipPosition="Left" tooltip="Draw to your max hand size">
+            <Image image="clone" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Draw</Text>
+        </Button>
+
+        <Button onClick="cycleDiscard" height="50" offsetXY="0 -120" tooltipPosition="Left" tooltip="Put your discard into your bag">
+            <Image image="recycle" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Cycle</Text>
+        </Button>
+
+        <Button onClick="shuffleDeck" height="50" offsetXY="0 -180" padding="10" tooltipPosition="Left" tooltip="Shuffle your bag">
+            <Image image="sync-alt" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Shuffle</Text>
+        </Button>
+    </Panel>
+</Panel>
+<!-- Tool Manager Window -->
+
+<!-- Character Selection Windows -->
+<Panel id="Purple_CharacterList" visibility="Purple" class="Window" width="800" height="600" active="false" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Select A Character</Text>
+    <Button class="closeButton" onClick="closeCharacterSelection"/>
+
+    <Panel offsetXY="160 250">
+        <Text offsetXY="20 0">Quick Select</Text>
+        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+            <Option>- None -</Option>
+            <Option>Argagarg Garg</Option>
+            <Option>Bal-Bas-Beta</Option>
+            <Option>Beginner</Option>
+            <Option>Captain Zane</Option>
+            <Option>Garus Rook</Option>
+            <Option>General Onimaru</Option>
+            <Option>Gloria Grayson</Option>
+            <Option>Grave Stormborne</Option>
+            <Option>Gwen Grayson</Option>
+            <Option>Jaina Stormborne</Option>
+            <Option>Jefferson DeGrey</Option>
+            <Option>Lum Bam-foo</Option>
+            <Option>M. Persephone</Option>
+            <Option>Master Menelker</Option>
+            <Option>Master Midori</Option>
+            <Option>Max Geiger</Option>
+            <Option>Sirus Quince</Option>
+            <Option>Setsuki Hiruki</Option>
+            <Option>Troq Bashar</Option>
+            <Option>Valerie Rose</Option>
+            <Option>Vendetta</Option>
+        </Dropdown>
+    </Panel>
+
+    <Panel height="20" rectAlignment="UpperCenter" offsetXY="0 -75">
+        <Text id="Purple_char_name" resizeTextForBestFit="true" height="50" />
+        <Text id="Purple_char_desc" offsetXY="0 -40" />
+    </Panel>
+
+    <Panel height="300" offsetXY="-250 0">
+        <Image id="Purple_char_pic" width="200"></Image>
+        <Panel offsetXY="200 0">
+            <Image id="Purple_char_chip_1" width="154"></Image>
+            <Image id="Purple_char_chip_2" width="154" offsetXY="175 0"></Image>
+            <Image id="Purple_char_chip_3" width="154" offsetXY="350 0"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="30" offsetXY="-325 -260">
+        <Button onClick="prevChar" height="30" width="100">
+            <Text>Previous</Text>
+        </Button>
+        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+            <Text>Next</Text>
+        </Button>
+        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+            <Text>Select</Text>
+        </Button>
+    </Panel>
+</Panel>
+
+<Panel id="Red_CharacterList" visibility="Red" class="Window" width="800" height="600" active="false" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Select A Character</Text>
+    <Button class="closeButton" onClick="closeCharacterSelection"/>
+
+    <Panel offsetXY="160 250">
+        <Text offsetXY="20 0">Quick Select</Text>
+        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+            <Option>- None -</Option>
+            <Option>Argagarg Garg</Option>
+            <Option>Bal-Bas-Beta</Option>
+            <Option>Beginner</Option>
+            <Option>Captain Zane</Option>
+            <Option>Garus Rook</Option>
+            <Option>General Onimaru</Option>
+            <Option>Gloria Grayson</Option>
+            <Option>Grave Stormborne</Option>
+            <Option>Gwen Grayson</Option>
+            <Option>Jaina Stormborne</Option>
+            <Option>Jefferson DeGrey</Option>
+            <Option>Lum Bam-foo</Option>
+            <Option>M. Persephone</Option>
+            <Option>Master Menelker</Option>
+            <Option>Master Midori</Option>
+            <Option>Max Geiger</Option>
+            <Option>Sirus Quince</Option>
+            <Option>Setsuki Hiruki</Option>
+            <Option>Troq Bashar</Option>
+            <Option>Valerie Rose</Option>
+            <Option>Vendetta</Option>
+        </Dropdown>
+    </Panel>
+
+    <Panel height="20" rectAlignment="UpperCenter" offsetXY="0 -75">
+        <Text id="Red_char_name" resizeTextForBestFit="true" height="50" />
+        <Text id="Red_char_desc" offsetXY="0 -40" />
+    </Panel>
+
+    <Panel height="300" offsetXY="-250 0">
+        <Image id="Red_char_pic" width="200"></Image>
+        <Panel offsetXY="200 0">
+            <Image id="Red_char_chip_1" width="154"></Image>
+            <Image id="Red_char_chip_2" width="154" offsetXY="175 0"></Image>
+            <Image id="Red_char_chip_3" width="154" offsetXY="350 0"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="30" offsetXY="-325 -260">
+        <Button onClick="prevChar" height="30" width="100">
+            <Text>Previous</Text>
+        </Button>
+        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+            <Text>Next</Text>
+        </Button>
+        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+            <Text>Select</Text>
+        </Button>
+    </Panel>
+</Panel>
+
+<Panel id="Green_CharacterList" visibility="Green" class="Window" width="800" height="600" active="false" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Select A Character</Text>
+    <Button class="closeButton" onClick="closeCharacterSelection"/>
+
+    <Panel offsetXY="160 250">
+        <Text offsetXY="20 0">Quick Select</Text>
+        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+            <Option>- None -</Option>
+            <Option>Argagarg Garg</Option>
+            <Option>Bal-Bas-Beta</Option>
+            <Option>Beginner</Option>
+            <Option>Captain Zane</Option>
+            <Option>Garus Rook</Option>
+            <Option>General Onimaru</Option>
+            <Option>Gloria Grayson</Option>
+            <Option>Grave Stormborne</Option>
+            <Option>Gwen Grayson</Option>
+            <Option>Jaina Stormborne</Option>
+            <Option>Jefferson DeGrey</Option>
+            <Option>Lum Bam-foo</Option>
+            <Option>M. Persephone</Option>
+            <Option>Master Menelker</Option>
+            <Option>Master Midori</Option>
+            <Option>Max Geiger</Option>
+            <Option>Sirus Quince</Option>
+            <Option>Setsuki Hiruki</Option>
+            <Option>Troq Bashar</Option>
+            <Option>Valerie Rose</Option>
+            <Option>Vendetta</Option>
+        </Dropdown>
+    </Panel>
+
+    <Panel height="20" rectAlignment="UpperCenter" offsetXY="0 -75">
+        <Text id="Green_char_name" resizeTextForBestFit="true" height="50" />
+        <Text id="Green_char_desc" offsetXY="0 -40" />
+    </Panel>
+
+    <Panel height="300" offsetXY="-250 0">
+        <Image id="Green_char_pic" width="200"></Image>
+        <Panel offsetXY="200 0">
+            <Image id="Green_char_chip_1" width="154"></Image>
+            <Image id="Green_char_chip_2" width="154" offsetXY="175 0"></Image>
+            <Image id="Green_char_chip_3" width="154" offsetXY="350 0"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="30" offsetXY="-325 -260">
+        <Button onClick="prevChar" height="30" width="100">
+            <Text>Previous</Text>
+        </Button>
+        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+            <Text>Next</Text>
+        </Button>
+        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+            <Text>Select</Text>
+        </Button>
+    </Panel>
+</Panel>
+
+<Panel id="Blue_CharacterList" visibility="Blue" class="Window" width="800" height="600" active="false" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Select A Character</Text>
+    <Button class="closeButton" onClick="closeCharacterSelection"/>
+
+    <Panel offsetXY="160 250">
+        <Text offsetXY="20 0">Quick Select</Text>
+        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+            <Option>- None -</Option>
+            <Option>Argagarg Garg</Option>
+            <Option>Bal-Bas-Beta</Option>
+            <Option>Beginner</Option>
+            <Option>Captain Zane</Option>
+            <Option>Garus Rook</Option>
+            <Option>General Onimaru</Option>
+            <Option>Gloria Grayson</Option>
+            <Option>Grave Stormborne</Option>
+            <Option>Gwen Grayson</Option>
+            <Option>Jaina Stormborne</Option>
+            <Option>Jefferson DeGrey</Option>
+            <Option>Lum Bam-foo</Option>
+            <Option>M. Persephone</Option>
+            <Option>Master Menelker</Option>
+            <Option>Master Midori</Option>
+            <Option>Max Geiger</Option>
+            <Option>Sirus Quince</Option>
+            <Option>Setsuki Hiruki</Option>
+            <Option>Troq Bashar</Option>
+            <Option>Valerie Rose</Option>
+            <Option>Vendetta</Option>
+        </Dropdown>
+    </Panel>
+
+    <Panel height="20" rectAlignment="UpperCenter" offsetXY="0 -75">
+        <Text id="Blue_char_name" resizeTextForBestFit="true" height="50" />
+        <Text id="Blue_char_desc" offsetXY="0 -40" />
+    </Panel>
+
+    <Panel height="300" offsetXY="-250 0">
+        <Image id="Blue_char_pic" width="200"></Image>
+        <Panel offsetXY="200 0">
+            <Image id="Blue_char_chip_1" width="154"></Image>
+            <Image id="Blue_char_chip_2" width="154" offsetXY="175 0"></Image>
+            <Image id="Blue_char_chip_3" width="154" offsetXY="350 0"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="30" offsetXY="-325 -260">
+        <Button onClick="prevChar" height="30" width="100">
+            <Text>Previous</Text>
+        </Button>
+        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+            <Text>Next</Text>
+        </Button>
+        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+            <Text>Select</Text>
+        </Button>
+    </Panel>
+</Panel>
+<!-- Character Selection Windows -->

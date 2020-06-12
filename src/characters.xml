@@ -1,0 +1,13 @@
+<Defaults>
+  <Text color="#FAFAFA"/>
+  <Button color="#828282"/>
+</Defaults>
+
+<Panel width="200" rectAlignment="UpperCenter">
+  <Panel width="200" height="30" rectAlignment="UpperCenter" position="0 85 -25">
+    <Text fontSize="25">Characters</Text>
+  </Panel>
+  <Panel width="200" height="30" rectAlignment="LowerCenter" position="0 -90 -25">
+    <Button onClick="toggleCharacterList" text="Select" fontStyle="Bold" fontSize="20" />
+  </Panel>
+</Panel>
