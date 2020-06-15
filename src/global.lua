@@ -591,34 +591,68 @@ end
 function discardHand(player)
     local hand = getObjectFromGUID(zones[player.color].hand)
     if hand ~= nil then
+        local objects = {}
+        for _, object in ipairs(hand.getObjects()) do
+            -- If it's face down, don't discard it. They chose to piggy bank it.
+            if object.is_face_down ~= true then table.insert(objects, object) end
+        end
+
         local discard = getObjectFromGUID(zones[player.color].discard)
-        if discard ~= nil then
-            local destination = discard.getPosition()
-            local discard_count = 0
+        if discard ~= nil then moveAllToDiscard({discard, objects}) end
+    end
+end
 
-            for _, object in ipairs(discard.getObjects()) do
-                destination.y = math.max(destination.y, object.getPosition().y)
-                discard_count = discard_count + 1
-            end
+function moveAllToDiscard(params)
+    local discard = params[1]
+    local objects = params[2]
+    if discard ~= nil then
+        print(discard)
+        local destination = discard.getPosition()
 
-            for _, object in ipairs(hand.getObjects()) do
-                -- If it's face down, don't discard it. They chose to piggy bank it.
-                if object.is_face_down ~= true then
-                    local count = getAmount(object)
+        destination.x = destination.x - 1.25 * 3
+        destination.z = destination.z - 1.25 * 3
 
-                    if 1 < count then
-                        local id = object.getGUID()
-                        for i = 1, count do
-                            local o = object.takeObject()
-                            Wait.condition(function()
-                                o.setPosition(destination)
-                            end, function()
-                                return o.spawning ~= true
-                            end)
-                        end
-                    else
-                        object.setPosition(destination, false, true)
+        for _, object in ipairs(discard.getObjects()) do destination.y = math.max(destination.y, object.getPosition().y) end
+
+        local row = 1
+        local column = 1
+        local index = 1
+        for _, object in ipairs(objects) do
+            local count = getAmount(object)
+
+            if 1 < count then
+                local id = object.getGUID()
+                for i = 1, count do
+                    local x_offset = row * 2
+                    local z_offset = column * 2
+                    local o = object.takeObject()
+                    Wait.condition(function()
+                        o.setPosition({x = destination.x + x_offset, y = destination.y + 3, z = destination.z + z_offset}, false, true)
+                    end, function()
+                        return o.spawning ~= true
+                    end)
+
+                    index = index + 1
+                    column = column + 1
+                    if 3 < column then
+                        column = 1
+                        row = row + 1
+
+                        if 3 < row then row = 1 end
                     end
+                end
+            else
+
+                local x_offset = row * 2
+                local z_offset = column * 2
+                object.setPosition({x = destination.x + x_offset, y = destination.y + 3, z = destination.z + z_offset}, false, true)
+
+                column = column + 1
+                if 3 < column then
+                    column = 1
+                    row = row + 1
+
+                    if 3 < row then row = 1 end
                 end
             end
         end
@@ -730,6 +764,16 @@ function drawMaxHand(player)
         else
             broadcastToColor("You are already at your maximum hand size.", player.color)
         end
+    end
+end
+
+function showMoney(player)
+    if Turns.turn_color == player.color then
+        local hand_zone = getObjectFromGUID(zones[player.color].hand)
+        local count = countGems(hand_zone)
+        broadcastToAll(player.steam_name .. " has $" .. count .. ".")
+      else
+        broadcastToColor("You can only announce your $ on your turn.", player.color)
     end
 end
 

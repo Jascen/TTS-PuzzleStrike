@@ -116,25 +116,31 @@
     <Text class="WindowTitle">Tools</Text>
 
     <Panel id="ToolManager_content" width="90" offsetXY="0 75">
-        <Button onClick="discardHand" height="50" tooltipPosition="Left" tooltip="Discard your hand">
-            <Image image="minus" preserveAspect="1" width="15" offsetXY="-30 0"/>
-            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Discard</Text>
-        </Button>
 
-        <Button onClick="drawMaxHand" height="50" offsetXY="0 -60" tooltipPosition="Left" tooltip="Draw to your max hand size">
+        <Button onClick="drawMaxHand" height="50" tooltipPosition="Left" tooltip="Draw to your max hand size">
             <Image image="clone" preserveAspect="1" width="15" offsetXY="-30 0"/>
             <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Draw</Text>
         </Button>
 
-        <Button onClick="cycleDiscard" height="50" offsetXY="0 -120" tooltipPosition="Left" tooltip="Put your discard into your bag">
-            <Image image="recycle" preserveAspect="1" width="15" offsetXY="-30 0"/>
-            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Cycle</Text>
+        <Button onClick="discardHand" height="50" offsetXY="0 -60" tooltipPosition="Left" tooltip="Discard your hand">
+            <Image image="minus" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Discard</Text>
         </Button>
 
-        <Button onClick="shuffleDeck" height="50" offsetXY="0 -180" padding="10" tooltipPosition="Left" tooltip="Shuffle your bag">
-            <Image image="sync-alt" preserveAspect="1" width="15" offsetXY="-30 0"/>
-            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Shuffle</Text>
+        <Panel height="50" offsetXY="0 -180">
+            <Button onClick="cycleDiscard" width="40" offsetXY="-25 0" tooltipPosition="Below" tooltip="Put your discard pile into your bag">
+                <Image image="recycle" preserveAspect="1" width="15" />
+            </Button>
+
+            <Button onClick="shuffleDeck" width="40" offsetXY="25 0" padding="10" tooltipPosition="Below" tooltip="Shuffle your bag">
+                <Image image="sync-alt" preserveAspect="1" width="15" />
+            </Button>
+        </Panel>
+
+        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gem in your hand">
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Show $$$</Text>
         </Button>
+
     </Panel>
 </Panel>
 <!-- Tool Manager Window -->
@@ -380,3 +386,61 @@
     </Panel>
 </Panel>
 <!-- Character Selection Windows -->
+
+<!-- Discard Prompt Windows -->
+<Panel id="Purple_DiscardPrompt" class="Window" width="250" height="75" active="true" color="#69696940" visibility="Black">
+    <Panel height="30" offsetXY="0 20">
+        <Text>Move chips to discard pile?</Text>
+        <Panel height="30" offsetXY="-55 -30">
+            <Button onClick="bf0d9a/yesDiscardClicked" height="30" width="100">
+                <Text>Yes</Text>
+            </Button>
+            <Button onClick="bf0d9a/noDiscardClicked" height="30" width="100" offsetXY="110 0">
+                <Text>No</Text>
+            </Button>
+        </Panel>
+    </Panel>
+</Panel>
+
+<Panel id="Red_DiscardPrompt" class="Window" width="250" height="75" active="true" color="#69696940" visibility="Black">
+    <Panel height="30" offsetXY="0 20">
+        <Text>Move chips to discard pile?</Text>
+        <Panel height="30" offsetXY="-55 -30">
+            <Button onClick="127d91/yesDiscardClicked" height="30" width="100">
+                <Text>Yes</Text>
+            </Button>
+            <Button onClick="127d91/noDiscardClicked" height="30" width="100" offsetXY="110 0">
+                <Text>No</Text>
+            </Button>
+        </Panel>
+    </Panel>
+</Panel>
+
+<Panel id="Green_DiscardPrompt" class="Window" width="250" height="75" active="true" color="#69696940" visibility="Black">
+    <Panel height="30" offsetXY="0 20">
+        <Text>Move chips to discard pile?</Text>
+        <Panel height="30" offsetXY="-55 -30">
+            <Button onClick="81be67/yesDiscardClicked" height="30" width="100">
+                <Text>Yes</Text>
+            </Button>
+            <Button onClick="81be67/noDiscardClicked" height="30" width="100" offsetXY="110 0">
+                <Text>No</Text>
+            </Button>
+        </Panel>
+    </Panel>
+</Panel>
+
+<Panel id="Blue_DiscardPrompt" class="Window" width="250" height="75" active="true" color="#69696940" visibility="Black">
+    <Panel height="30" offsetXY="0 20">
+        <Text>Move chips to discard pile?</Text>
+        <Panel height="30" offsetXY="-55 -30">
+            <Button onClick="723c3f/yesDiscardClicked" height="30" width="100">
+                <Text>Yes</Text>
+            </Button>
+            <Button onClick="723c3f/noDiscardClicked" height="30" width="100" offsetXY="110 0">
+                <Text>No</Text>
+            </Button>
+        </Panel>
+    </Panel>
+</Panel>
+<!-- Discard Prompt Windows -->
