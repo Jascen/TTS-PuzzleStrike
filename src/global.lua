@@ -493,8 +493,29 @@ end
 ----- ?????
 
 function onLoad(save_state)
+    if save_state ~= "" then
+         local loaded_data = JSON.decode(save_state)
+         player_data = loaded_data.player_data
+         UI.setAttribute("NewGame", "active", new_game)
+    else
+        tableImageData = {}
+        checkData = {move=false, scale=false}
+        UI.setAttribute("NewGame", "active", true)
+    end
+
     MegaFreeze()
     updatePlayers()
+end
+
+function onSave()
+  local new_game_state = UI.getAttribute("NewGame", "active")
+    saved_data = JSON.encode({
+      player_data=player_data,
+      new_game=new_game_state
+    })
+
+    --saved_data = ""
+    return saved_data
 end
 
 function updatePlayers()
