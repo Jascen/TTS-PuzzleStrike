@@ -1,20 +1,12 @@
 current_bank = {}
-current_bank["1 Gem"] = {position = {-18.75, 1.75, -2.5}}
-current_bank["2 Gem"] = {position = {-13.5, 1.75, -2.5}}
-current_bank["3 Gem"] = {position = {-8.75, 1.75, -2.5}}
-current_bank["4 Gem"] = {position = {-3.75, 1.75, -2.5}}
-current_bank["Wound"] = {position = {1.25, 1.75, -2.5}}
-current_bank["Combine"] = {position = {6.25, 1.75, -2.5}}
-current_bank["Crash"] = {position = {11.25, 1.75, -2.5}}
-current_bank["Double Crash"] = {position = {16.25, 1.75, -2.5}}
 
 labels = {"190e7e", "b7b868", "edcf5c", "6858e1", "f83cc0", "a85bf8", "0ff78d", "e7067a", "183d8e", "84efa2"}
 
 player_data = {
-    Purple = {pile = 0, hand = 0, discard = 0, bag = 0},
-    Red = {pile = 0, hand = 0, discard = 0, bag = 0},
-    Green = {pile = 0, hand = 0, discard = 0, bag = 0},
-    Blue = {pile = 0, hand = 0, discard = 0, bag = 0}
+  Purple = {pile = 0, hand = 0, discard = 0, bag = 0, ongoing = 0},
+  Red = {pile = 0, hand = 0, discard = 0, bag = 0, ongoing = 0},
+  Green = {pile = 0, hand = 0, discard = 0, bag = 0, ongoing = 0},
+  Blue = {pile = 0, hand = 0, discard = 0, bag = 0, ongoing = 0},
 }
 
 show = {Scoreboard = {Purple = {visible = true}, Red = {visible = true}, Green = {visible = true}, Blue = {visible = true}}}
@@ -54,16 +46,15 @@ zones = {
 
 modes = {random = "random", draft = "draft", manual = "manual", beginner = "beginner"}
 
-bags = {
-    one = {id = "28471a", name = "1 Gem", position = {-18.75, 1.75, -2.5}},
-    two = {id = "86ec5b", name = "2 Gem", position = {-13.5, 1.75, -2.5}},
-    three = {id = "7a6c86", name = "3 Gem", position = {-8.75, 1.75, -2.5}},
-    four = {id = "ef3290", name = "4 Gem", position = {-3.75, 1.75, -2.5}},
-    wound = {id = "70506f", name = "Wound", position = {1.25, 1.75, -2.5}},
-    combine = {id = "08a082", name = "Combine", position = {6.25, 1.75, -2.5}},
-    crash_single = {id = "214064", name = "Crash", position = {11.25, 1.75, -2.5}},
-    crash_double = {id = "b3a19d", name = "Double Crash", position = {16.25, 1.75, -2.5}}
-}
+bags = {}
+bags["1 Gem"] = {id = "ecbd4d", name = "1 Gem", position = {-18.75, 1.75, -2.5}}
+bags["2 Gem"] = {id = "4d929f", name = "2 Gem", position = {-13.5, 1.75, -2.5}}
+bags["3 Gem"] = {id = "2ab1eb", name = "3 Gem", position = {-8.75, 1.75, -2.5}}
+bags["4 Gem"] = {id = "834956", name = "4 Gem", position = {-3.75, 1.75, -2.5}}
+bags["Wound"] = {id = "6b8541", name = "Wound", position = {1.25, 1.75, -2.5}}
+bags["Combine"] = {id = "63b06e", name = "Combine", position = {6.25, 1.75, -2.5}}
+bags["Crash"] = {id = "992679", name = "Crash", position = {11.25, 1.75, -2.5}}
+bags["Double Crash"] = {id = "30747e", name = "Double Crash", position = {16.25, 1.75, -2.5}}
 
 chip_obj = {
     just_a_scratch = {id = "b8a24c", key = "just_a_scratch", name = "Just a Scratch", cost = 1},
@@ -171,15 +162,27 @@ end
 
 --- Rotates the bank to look at the side of the board based on whose turn it is
 function onPlayerTurnStart(current, previous)
+    if previous == nil or previous == '' then return end
+
     -- Build unique list of highest object count
     for _, o in pairs(getObjectFromGUID(bank_zone).getObjects()) do
-        if o.getLock() ~= true then
+        if o.getLock() ~= true and o.tag == 'Tile' then
             local name = o.getName()
             if name ~= nil and name ~= "" then
                 local bank_object = current_bank[name]
                 if bank_object ~= nil then
                     local p = bank_object.position
                     o.setPositionSmooth({p[1], p[2] + 1, p[3]}, false, true)
+                else
+                    local bag = bags[name]
+                    if bag ~= nil and bag.id ~= nil then
+                        if name == "1 Gem" then
+                            local p = bag.position
+                            o.setPositionSmooth({p[1], p[2] + 1, p[3]}, false, true)
+                        else
+                            getObjectFromGUID(bag.id).putObject(o)
+                        end
+                    end
                 end
             end
         end
@@ -255,7 +258,7 @@ end
 
 function updateDeckSize(color)
     local o = player_data[color]
-    local count = o.hand + o.discard + o.bag
+    local count = o.hand + o.discard + o.bag + o.ongoing
     UI.setAttribute(color .. "_deck", "text", count)
 end
 
@@ -275,6 +278,8 @@ function onObjectEnterContainer(container, object)
 end
 
 function onObjectLeaveContainer(container, object)
+    if object.tag == 'Tile' then object.setCustomObject({stackable = false}) end
+
     local container_id = container.getGUID()
     for color, o in pairs(zones) do
         for key, id in pairs(o) do
@@ -312,6 +317,10 @@ function onObjectEnterScriptingZone(zone, object)
                     player_data[color].hand = count
                     UI.setAttribute(color .. "_hand", "text", count)
                     updateDeckSize(color)
+                elseif key == "ongoing" then -- Count ongoing
+                    local count = countObjects(zone) + getAmount(object)
+                    player_data[color].ongoing = count
+                    updateDeckSize(color)
                 end
             end
         end
@@ -339,6 +348,10 @@ function onObjectLeaveScriptingZone(zone, object)
                     local count = countObjects(zone)
                     player_data[color].hand = count
                     UI.setAttribute(color .. "_hand", "text", count)
+                    updateDeckSize(color)
+                elseif key == "ongoing" then -- Count ongoing
+                    local count = countObjects(zone)
+                    player_data[color].ongoing = count
                     updateDeckSize(color)
                 end
             end
@@ -480,20 +493,7 @@ end
 ----- ?????
 
 function onLoad(save_state)
-    local bank_pool_bag = getObjectFromGUID("6b6799")
-    bank_pool_bag.interactable = false
-
-    local setup_bag = getObjectFromGUID("5e08f3")
-    setup_bag.interactable = false
-
-    -- Backgrounds for chips
-    for _, id in ipairs(placeholders) do getObjectFromGUID(id).interactable = false end
-
-    chars = getObjectFromGUID("9ec2ec")
-    chars.interactable = false -- Beginner page
-    getObjectFromGUID("f45a6c").interactable = false
-    getObjectFromGUID("0c2d22").interactable = false
-
+    MegaFreeze()
     updatePlayers()
 end
 
@@ -536,25 +536,19 @@ end
 -- UI - New Game --
 
 -- UI - Character Selection --
-function nextChar(player)
-    chars.call("nextChar", player)
+
+function makeDeck(player)
+  local playerHand = player.getPlayerHand()
+  if playerHand then
+    local crash_bag = getObjectFromGUID(bags["Crash"].id)
+    local gem_bag = getObjectFromGUID(bags["1 Gem"].id)
+    if crash_bag ~= nil and gem_bag ~= nil then
+      crash_bag.deal(1, player.color)
+      gem_bag.deal(6, player.color)
+    end
+  end
 end
 
-function prevChar(player)
-    chars.call("prevChar", player)
-end
-
-function optionSelected(player, name)
-    chars.call("optionSelected", {player = player, name = name})
-end
-
-function selectChar(player)
-    chars.call("selectChar", player)
-end
-
-function closeCharacterSelection(player)
-    chars.call("closeCharacterSelection", player)
-end
 -- UI - Character Selection --
 
 -- UI - Scoreboard --
@@ -606,7 +600,6 @@ function moveAllToDiscard(params)
     local discard = params[1]
     local objects = params[2]
     if discard ~= nil then
-        print(discard)
         local destination = discard.getPosition()
 
         destination.x = destination.x - 1.25 * 3
@@ -671,14 +664,15 @@ function cycleDiscard(player)
                     for i = 1, count do
                         local o = object.takeObject()
                         Wait.condition(function()
-                            deck.shuffle()
                             deck.putObject(o)
+                            deck.shuffle()
                         end, function()
                             return o.spawning ~= true
                         end)
                     end
                 else
                     deck.putObject(object)
+                    deck.shuffle()
                 end
             end
         end
@@ -771,10 +765,47 @@ function showMoney(player)
     if Turns.turn_color == player.color then
         local hand_zone = getObjectFromGUID(zones[player.color].hand)
         local count = countGems(hand_zone)
-        broadcastToAll(player.steam_name .. " has $" .. count .. ".")
-      else
+        broadcastToAll(player.steam_name .. " has $" .. count .. " in their hand.")
+    else
         broadcastToColor("You can only announce your $ on your turn.", player.color)
     end
 end
 
 -- UI - Tools --
+
+function MegaFreeze()
+    local freezeByZone = {} -- Place GUIDs of script zones here
+    local freezeByGUID = {
+        "6b6799", -- All puzzle chips bag
+        "5e08f3", -- Bottom row bank bag
+        "9ec2ec", -- Character sheet
+        "f45a6c", -- Character chip platform
+        "0c2d22", -- Puzzle chip platform
+        "bf0d9a", -- Purple play mat
+        "127d91", -- Red play mat
+        "81be67", -- Green play mat
+        "723c3f", -- Blue play mat
+    } -- Place GUIDs of individual Objects here
+
+    -- Backgrounds for chips
+    for _, id in ipairs(placeholders) do getObjectFromGUID(id).interactable = false end
+
+    for _, obj in pairs(getAllObjects()) do
+        if      obj.getName() == 'MegaFreeze' then
+                obj.interactable = false
+        elseif  obj.getDescription() == 'MegaFreeze' then
+                obj.interactable = false
+        else
+            for _, guid in pairs(freezeByGUID) do
+                if obj.getGUID() == guid then obj.interactable = false end
+            end
+        end
+    end
+
+     -- Freeze Objects by Zone
+    for _, zone in pairs(freezeByZone) do
+        for _, obj in pairs(getObjectFromGUID(zone).getObjects()) do
+            obj.interactable = false
+        end
+    end
+end

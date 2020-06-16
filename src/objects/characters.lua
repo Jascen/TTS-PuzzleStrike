@@ -99,6 +99,8 @@ function selectChar(player)
                         return clone.getGUID() ~= id
                     end)
                 end
+
+                Global.call("makeDeck", player)
             else
                 broadcastToAll(player.steam_name .. " cannot select a character because the color " .. player.color .. " has no hand region.", {0.8, 0.05, 0.05})
             end

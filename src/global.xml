@@ -137,7 +137,7 @@
             </Button>
         </Panel>
 
-        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gem in your hand">
+        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gems in your hand">
             <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Show $$$</Text>
         </Button>
 
@@ -149,11 +149,11 @@
 <Panel id="Purple_CharacterList" visibility="Purple" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Select A Character</Text>
-    <Button class="closeButton" onClick="closeCharacterSelection"/>
+    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
 
     <Panel offsetXY="160 250">
         <Text offsetXY="20 0">Quick Select</Text>
-        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
             <Option>- None -</Option>
             <Option>Argagarg Garg</Option>
             <Option>Bal-Bas-Beta</Option>
@@ -194,13 +194,13 @@
     </Panel>
 
     <Panel height="30" offsetXY="-325 -260">
-        <Button onClick="prevChar" height="30" width="100">
+        <Button onClick="9ec2ec/prevChar" height="30" width="100">
             <Text>Previous</Text>
         </Button>
-        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -209,11 +209,11 @@
 <Panel id="Red_CharacterList" visibility="Red" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Select A Character</Text>
-    <Button class="closeButton" onClick="closeCharacterSelection"/>
+    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
 
     <Panel offsetXY="160 250">
         <Text offsetXY="20 0">Quick Select</Text>
-        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
             <Option>- None -</Option>
             <Option>Argagarg Garg</Option>
             <Option>Bal-Bas-Beta</Option>
@@ -254,13 +254,13 @@
     </Panel>
 
     <Panel height="30" offsetXY="-325 -260">
-        <Button onClick="prevChar" height="30" width="100">
+        <Button onClick="9ec2ec/prevChar" height="30" width="100">
             <Text>Previous</Text>
         </Button>
-        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -269,11 +269,11 @@
 <Panel id="Green_CharacterList" visibility="Green" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Select A Character</Text>
-    <Button class="closeButton" onClick="closeCharacterSelection"/>
+    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
 
     <Panel offsetXY="160 250">
         <Text offsetXY="20 0">Quick Select</Text>
-        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
             <Option>- None -</Option>
             <Option>Argagarg Garg</Option>
             <Option>Bal-Bas-Beta</Option>
@@ -314,13 +314,13 @@
     </Panel>
 
     <Panel height="30" offsetXY="-325 -260">
-        <Button onClick="prevChar" height="30" width="100">
+        <Button onClick="9ec2ec/prevChar" height="30" width="100">
             <Text>Previous</Text>
         </Button>
-        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -329,11 +329,11 @@
 <Panel id="Blue_CharacterList" visibility="Blue" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Select A Character</Text>
-    <Button class="closeButton" onClick="closeCharacterSelection"/>
+    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
 
     <Panel offsetXY="160 250">
         <Text offsetXY="20 0">Quick Select</Text>
-        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
+        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
             <Option>- None -</Option>
             <Option>Argagarg Garg</Option>
             <Option>Bal-Bas-Beta</Option>
@@ -374,13 +374,13 @@
     </Panel>
 
     <Panel height="30" offsetXY="-325 -260">
-        <Button onClick="prevChar" height="30" width="100">
+        <Button onClick="9ec2ec/prevChar" height="30" width="100">
             <Text>Previous</Text>
         </Button>
-        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
+        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
