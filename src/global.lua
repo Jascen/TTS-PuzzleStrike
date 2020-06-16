@@ -510,58 +510,6 @@ chip_obj = {
 
 ----- Bank manipulation
 
---- Initiates the process to build a bank for the provided mode
--- mode - The bank building mode
-function selectMode(mode)
-    draftBoard = getObjectFromGUID(draftBoard_id)
-    chip_keys = extractKeysFromTable(chip_obj)
-
-    local chips = nil
-    if mode == modes.random then
-        -- TODO: Promote?
-        -- TODO: Place stage?
-        chips = getRandomChips(chip_keys, 10, {})
-        buildBank_ChipRows(chips)
-        -- destroyDraftBoard()
-    elseif mode == modes.beginner then
-        -- TODO: Promote?
-        -- TODO: Place stage?
-
-        chips = {}
-        chips["combos_are_hard"] = chip_obj["combos_are_hard"]
-        chips["draw_three"] = chip_obj["draw_three"]
-        chips["gem_essence"] = chip_obj["gem_essence"]
-        chips["knockdown"] = chip_obj["knockdown"]
-        chips["one_of_each"] = chip_obj["one_of_each"]
-        chips["one_two_punch"] = chip_obj["one_two_punch"]
-        chips["risky_move"] = chip_obj["risky_move"]
-        chips["sale_prices"] = chip_obj["sale_prices"]
-        chips["self_improvement"] = chip_obj["self_improvement"]
-        chips["sneak_attack"] = chip_obj["sneak_attack"]
-        buildBank_ChipRows(chips)
-        -- destroyDraftBoard()
-    else
-        draftBoard.setPosition({
-            0,
-            1.01,
-            0
-        })
-        draftBoard.lock()
-        draftBoard.interactable = false
-
-        -- TODO: Implement draft mode
-        if mode == modes.draft then
-            chips = getRandomChips(chip_keys, 5, staged_chips)
-            displayCandidates(chips, true)
-        elseif mode == modes.manual then
-            displayCandidates(chip_obj, false)
-        end
-    end
-
-    Turns.enable = true
-    move_Bags()
-end
-
 --- Rotates the bank to look at the side of the board based on whose turn it is
 function onPlayerTurnStart(current, previous)
     if previous == nil or previous == '' then return end
@@ -972,19 +920,88 @@ function onPlayerChangeColor(color)
 end
 
 -- UI - New Game --
-function selectMode_FirstGame()
-    selectMode(modes.beginner)
+mode = modes.random
+
+function togglePlaceholder(player, value)
+    for i, id in ipairs(labels) do
+        local label = getObjectFromGUID(id)
+        if value == "True" then
+            label.TextTool.setValue(tostring(i))
+        else
+            label.TextTool.setValue(" ")
+        end
+    end
+end
+
+function closeNewGame()
     UI.setAttribute("NewGame", "active", false)
 end
 
-function selectMode_Random()
-    selectMode(modes.random)
-    UI.setAttribute("NewGame", "active", false)
+function selectMode(player, option, id)
+    if option == "Random" then
+        mode = modes.random
+    elseif option == "Manual" then
+        mode = modes.manual
+    elseif option == "Draft" then
+        mode = modes.draft
+    elseif option == "First Game" then
+        mode = modes.beginner
+    end
 end
 
-function selectMode_Draft()
-    selectMode(modes.draft)
-    UI.setAttribute("NewGame", "active", false)
+--- Initiates the process to build a bank for the provided mode
+-- mode - The bank building mode
+function startGame()
+    draftBoard = getObjectFromGUID(draftBoard_id)
+    chip_keys = extractKeysFromTable(chip_obj)
+
+    local chips = nil
+    if mode == modes.random then
+        -- TODO: Promote?
+        -- TODO: Place stage?
+        chips = getRandomChips(chip_keys, 10, {})
+        buildBank_ChipRows(chips)
+        -- destroyDraftBoard()
+    elseif mode == modes.beginner then
+        -- TODO: Promote?
+        -- TODO: Place stage?
+
+        chips = {}
+        chips["combos_are_hard"] = chip_obj["combos_are_hard"]
+        chips["draw_three"] = chip_obj["draw_three"]
+        chips["gem_essence"] = chip_obj["gem_essence"]
+        chips["knockdown"] = chip_obj["knockdown"]
+        chips["one_of_each"] = chip_obj["one_of_each"]
+        chips["one_two_punch"] = chip_obj["one_two_punch"]
+        chips["risky_move"] = chip_obj["risky_move"]
+        chips["sale_prices"] = chip_obj["sale_prices"]
+        chips["self_improvement"] = chip_obj["self_improvement"]
+        chips["sneak_attack"] = chip_obj["sneak_attack"]
+        buildBank_ChipRows(chips)
+        -- destroyDraftBoard()
+    elseif mode == modes.manual then
+        -- Do nothing
+    else
+        draftBoard.setPosition({
+            0,
+            1.01,
+            0
+        })
+        draftBoard.lock()
+        draftBoard.interactable = false
+
+        -- TODO: Implement draft mode
+        if mode == modes.draft then
+            chips = getRandomChips(chip_keys, 5, staged_chips)
+            displayCandidates(chips, true)
+        elseif mode == modes.manual then
+            displayCandidates(chip_obj, false)
+        end
+    end
+
+    closeNewGame()
+    move_Bags()
+    Turns.enable = true
 end
 -- UI - New Game --
 
