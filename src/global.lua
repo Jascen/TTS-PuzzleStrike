@@ -878,9 +878,7 @@ function onLoad(save_state)
     if save_state ~= "" then
         local loaded_data = JSON.decode(save_state)
         player_data = loaded_data.player_data
-        UI.setAttribute("NewGame", "active", loaded_data.new_game)
     else
-        UI.setAttribute("NewGame", "active", true)
     end
 
     MegaFreeze()
@@ -888,10 +886,8 @@ function onLoad(save_state)
 end
 
 function onSave()
-    local new_game_state = UI.getAttribute("NewGame", "active")
     saved_data = JSON.encode({
         player_data = player_data,
-        new_game = new_game_state
     })
 
     -- saved_data = ""
@@ -919,6 +915,28 @@ function onPlayerChangeColor(color)
     updatePlayers()
 end
 
+-- UI - Host Options --
+function toggleHostOptions()
+  local opened = UI.getAttribute("HostOptions_content", "active")
+  if opened == "False" then
+    UI.setAttribute("HostOptions", "height", 75)
+    UI.setAttribute("HostOptions_content", "active", true)
+  else
+    UI.setAttribute("HostOptions", "height", 25)
+    UI.setAttribute("HostOptions_content", "active", false)
+  end
+end
+
+function toggleNewGame()
+  local opened = UI.getAttribute("NewGame", "active")
+  if opened == "True" then
+      UI.setAttribute("NewGame", "active", false)
+  else
+    UI.setAttribute("NewGame", "active", true)
+  end
+end
+-- UI - Host Options --
+
 -- UI - New Game --
 mode = modes.random
 
@@ -934,7 +952,7 @@ function togglePlaceholder(player, value)
 end
 
 function closeNewGame()
-    UI.setAttribute("NewGame", "active", false)
+  UI.setAttribute("NewGame", "active", false)
 end
 
 function selectMode(player, option, id)
