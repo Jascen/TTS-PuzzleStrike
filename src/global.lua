@@ -13,6 +13,12 @@ labels = {
     "84efa2"
 }
 
+game_settings = {
+  initialized = false,
+  showLabels = false,
+  rotateBank = false
+}
+
 player_data = {
     Purple = {
         pile = 0,
@@ -59,6 +65,13 @@ show = {
             visible = true
         }
     }
+}
+
+player_mats = {
+  "bf0d9a", -- Purple play mat
+  "127d91", -- Red play mat
+  "81be67", -- Green play mat
+  "723c3f" -- Blue play mat
 }
 
 bank_zone = "d0169e"
@@ -127,76 +140,84 @@ modes = {
 
 bags = {}
 bags["1 Gem"] = {
-    id = "ecbd4d",
-    name = "1 Gem",
-    position = {
-        -18.75,
-        1.75,
-        -2.5
-    }
+  infinite = "03f9d2",
+  id = "ecbd4d",
+  name = "1 Gem",
+  position = {
+    -17.5,
+    1.75,
+    -2.5
+  }
 }
 bags["2 Gem"] = {
-    id = "4d929f",
-    name = "2 Gem",
-    position = {
-        -13.5,
-        1.75,
-        -2.5
-    }
+  infinite = "58de7e",
+  id = "4d929f",
+  name = "2 Gem",
+  position = {
+    -12.5,
+    1.75,
+    -2.5
+  }
 }
 bags["3 Gem"] = {
-    id = "2ab1eb",
-    name = "3 Gem",
-    position = {
-        -8.75,
-        1.75,
-        -2.5
-    }
+  infinite = "b14ade",
+  id = "2ab1eb",
+  name = "3 Gem",
+  position = {
+    -7.5,
+    1.75,
+    -2.5
+  }
 }
 bags["4 Gem"] = {
-    id = "834956",
-    name = "4 Gem",
-    position = {
-        -3.75,
-        1.75,
-        -2.5
-    }
+  infinite = "bebcac",
+  id = "834956",
+  name = "4 Gem",
+  position = {
+    -2.5,
+    1.75,
+    -2.5
+  }
 }
 bags["Wound"] = {
-    id = "6b8541",
-    name = "Wound",
-    position = {
-        1.25,
-        1.75,
-        -2.5
-    }
+  infinite = "019c62",
+  id = "6b8541",
+  name = "Wound",
+  position = {
+    2.5,
+    1.75,
+    -2.5
+  }
 }
 bags["Combine"] = {
-    id = "63b06e",
-    name = "Combine",
-    position = {
-        6.25,
-        1.75,
-        -2.5
-    }
+  infinite = "dfc232",
+  id = "63b06e",
+  name = "Combine",
+  position = {
+    7.5,
+    1.75,
+    -2.5
+  }
 }
 bags["Crash"] = {
-    id = "992679",
-    name = "Crash",
-    position = {
-        11.25,
-        1.75,
-        -2.5
-    }
+  infinite = "acb599",
+  id = "992679",
+  name = "Crash",
+  position = {
+    12.5,
+    1.75,
+    -2.5
+  }
 }
 bags["Double Crash"] = {
-    id = "30747e",
-    name = "Double Crash",
-    position = {
-        16.25,
-        1.75,
-        -2.5
-    }
+  infinite = "b4a728",
+  id = "30747e",
+  name = "Double Crash",
+  position = {
+    17.5,
+    1.75,
+    -2.5
+  }
 }
 
 chip_obj = {
@@ -530,31 +551,20 @@ function onPlayerTurnStart(current, previous)
                 else
                     local bag = bags[name]
                     if bag ~= nil and bag.id ~= nil then
-                        if name == "1 Gem" then
-                            local p = bag.position
-                            o.setPositionSmooth({
-                                p[1],
-                                p[2] + 1,
-                                p[3]
-                            }, false, true)
-                        else
                             getObjectFromGUID(bag.id).putObject(o)
-                        end
                     end
                 end
             end
         end
     end
 
-    if current == "Purple" then
-        rotateBank(180)
-    elseif current == "Red" then
-        rotateBank(180)
-    elseif current == "Green" then
-        rotateBank(0)
-    elseif current == "Blue" then
-        rotateBank(0)
+  if game_settings.rotateBank == true then
+    if current == "Purple" or current == "Red" then
+      rotateBank(180)
+    elseif current == "Green" or current == "Blue" then
+      rotateBank(0)
     end
+  end
 end
 
 function rotateBank(degree)
@@ -567,7 +577,7 @@ function rotateBank(degree)
     for _, label in pairs(labels) do
         local o = getObjectFromGUID(label)
         o.setPosition({
-            x = -23.75 + (5 * i),
+            x = -22.25 + (5 * i),
             y = 2,
             z = z
         })
@@ -587,13 +597,6 @@ function rotateBank(degree)
             degree,
             rotation[3]
         })
-    end
-end
-
-function move_Bags()
-    for _, o in pairs(bags) do
-        local bag = getObjectFromGUID(o.id)
-        bag.setPosition(o.position)
     end
 end
 
@@ -677,22 +680,21 @@ function onObjectEnterScriptingZone(zone, object)
                     local name = object.getName()
                     if name:match("%d Gem") then
                         local count = countGems(zone)
-                        count = count + countGem(object)
                         updateRow(color, count)
                     end
 
                     return
                 elseif key == "discard" then -- Count discard
-                    local count = countObjects(zone) + getAmount(object)
+                    local count = countObjects(zone)
                     player_data[color].discard = count
                     updateDeckSize(color)
                 elseif key == "hand" then -- Count hand
-                    local count = countObjects(zone) + getAmount(object)
+                    local count = countObjects(zone)
                     player_data[color].hand = count
                     UI.setAttribute(color .. "_hand", "text", count)
                     updateDeckSize(color)
                 elseif key == "ongoing" then -- Count ongoing
-                    local count = countObjects(zone) + getAmount(object)
+                    local count = countObjects(zone)
                     player_data[color].ongoing = count
                     updateDeckSize(color)
                 end
@@ -757,9 +759,26 @@ end
 
 function countObjects(zone)
     local count = 0
-    if zone ~= nil then for _, object in ipairs(zone.getObjects()) do count = count + getAmount(object) end end
+    if zone ~= nil then 
+      for _, object in ipairs(zone.getObjects()) do 
+        local id = object.getGUID()
+        -- Never count the player mat as an object
+        if isPlayerMat(id) ~= true then
+          count = count + getAmount(object) 
+        end
+      end
+    end
 
     return count
+end
+
+function isPlayerMat(id)
+  for i=1,#player_mats do
+     if player_mats[i] == id then 
+        return true
+     end
+  end
+  return false
 end
 
 function countGems(zone)
@@ -800,7 +819,7 @@ function buildBank_ChipRows(collection)
     local item_offset_z = -2.5
 
     local start = {
-        x = 0 - (item_offset_x + pad_offset_x) / 2, -- Offset by half
+        x = 1.25 - (item_offset_x + pad_offset_x) / 2, -- Offset by half
         y = 2.5,
         z = 0 - item_offset_z
     }
@@ -878,7 +897,6 @@ function onLoad(save_state)
     if save_state ~= "" then
         local loaded_data = JSON.decode(save_state)
         player_data = loaded_data.player_data
-    else
     end
 
     MegaFreeze()
@@ -940,10 +958,16 @@ end
 -- UI - New Game --
 mode = modes.random
 
-function togglePlaceholder(player, value)
+function togglePlaceholder(_, value)
+    if value == "True" then
+      game_settings.showLabels = true
+    else
+      game_settings.showLabels = false
+    end
+
     for i, id in ipairs(labels) do
         local label = getObjectFromGUID(id)
-        if value == "True" then
+        if game_settings.showLabels == true then
             label.TextTool.setValue(tostring(i))
         else
             label.TextTool.setValue(" ")
@@ -967,11 +991,34 @@ function selectMode(player, option, id)
     end
 end
 
+function setupDefaultBoard()
+  local setup = getObjectFromGUID("5e08f3")
+  if setup ~= nil then
+    for _, o in pairs(bags) do
+      local infinite_bag = setup.takeObject({guid = o.infinite})
+      if infinite_bag ~= nil then
+        local clone = infinite_bag.takeObject()
+        if clone ~= nil then
+          setup.putObject(infinite_bag)
+          clone.setPositionSmooth(o.position, false, true)
+          clone.setLock(true)
+      end
+      end
+    end
+  end
+end
+
 --- Initiates the process to build a bank for the provided mode
 -- mode - The bank building mode
 function startGame()
-    draftBoard = getObjectFromGUID(draftBoard_id)
-    chip_keys = extractKeysFromTable(chip_obj)
+  if game_settings.initialized == true then return end
+
+  game_settings.initialized = true
+
+  draftBoard = getObjectFromGUID(draftBoard_id)
+  chip_keys = extractKeysFromTable(chip_obj)
+
+  setupDefaultBoard()
 
     local chips = nil
     if mode == modes.random then
@@ -1018,7 +1065,6 @@ function startGame()
     end
 
     closeNewGame()
-    move_Bags()
     Turns.enable = true
 end
 -- UI - New Game --
@@ -1026,15 +1072,19 @@ end
 -- UI - Character Selection --
 
 function makeDeck(player)
+  if game_settings.initialized == true then
     local playerHand = player.getPlayerHand()
     if playerHand then
-        local crash_bag = getObjectFromGUID(bags["Crash"].id)
-        local gem_bag = getObjectFromGUID(bags["1 Gem"].id)
-        if crash_bag ~= nil and gem_bag ~= nil then
-            crash_bag.deal(1, player.color)
-            gem_bag.deal(6, player.color)
-        end
+      local crash_bag = getObjectFromGUID(bags["Crash"].id)
+      local gem_bag = getObjectFromGUID(bags["1 Gem"].id)
+      if crash_bag ~= nil and gem_bag ~= nil then
+        crash_bag.deal(1, player.color)
+        gem_bag.deal(6, player.color)
+        return true
+      end
     end
+  end
+  return false
 end
 
 -- UI - Character Selection --
@@ -1282,23 +1332,30 @@ function MegaFreeze()
         "9ec2ec", -- Character sheet
         "f45a6c", -- Character chip platform
         "0c2d22", -- Puzzle chip platform
-        "bf0d9a", -- Purple play mat
-        "127d91", -- Red play mat
-        "81be67", -- Green play mat
-        "723c3f" -- Blue play mat
     } -- Place GUIDs of individual Objects here
 
+    -- Add player mats
+    for _,id in pairs(player_mats) do
+      table.insert(freezeByGUID, id)
+    end
+
     -- Backgrounds for chips
-    for _, id in ipairs(placeholders) do getObjectFromGUID(id).interactable = false end
+    for _, id in ipairs(placeholders) do
+      local obj = getObjectFromGUID(id)
+      obj.setLock(true)
+      obj.interactable = false
+    end
 
     for _, obj in pairs(getAllObjects()) do
-        if obj.getName() == 'MegaFreeze' then
-            obj.interactable = false
-        elseif obj.getDescription() == 'MegaFreeze' then
-            obj.interactable = false
-        else
-            for _, guid in pairs(freezeByGUID) do if obj.getGUID() == guid then obj.interactable = false end end
-        end
+      if obj.getName() == 'MegaFreeze' then
+        obj.setLock(true)
+        obj.interactable = false
+      elseif obj.getDescription() == 'MegaFreeze' then
+        obj.setLock(true)
+        obj.interactable = false
+      else
+        for _, guid in pairs(freezeByGUID) do if obj.getGUID() == guid then obj.interactable = false end end
+      end
     end
 
     -- Freeze Objects by Zone
