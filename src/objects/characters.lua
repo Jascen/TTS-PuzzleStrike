@@ -264,41 +264,43 @@ function inspectCharacter(player, character, name)
 end
 
 function selectChar(player)
-    local name = character_map[show[player.color].currentId]
-    if name ~= nil then
-        local character = characters[name]
-        if character ~= nil then
-            local playerHand = player.getPlayerHand()
-            if playerHand then
-                local success = Global.call("makeDeck", player)
-                if success == true then
-                    for i, id in pairs(character.chips) do
-                      local clone = getObjectFromGUID(id).clone()
-                      Wait.condition(function()
-                          clone.deal(1, player.color)
-                      end, function()
-                          return clone.getGUID() ~= id
-                      end)
-                    end
-                else
-                    broadcastToAll(player.steam_name .. " cannot select a character the game has not started.", {
-                        0.8,
-                        0.05,
-                        0.05
-                    })
-                end
-            else
-                broadcastToAll(player.steam_name .. " cannot select a character because the color " .. player.color .. " has no hand region.", {
-                    0.8,
-                    0.05,
-                    0.05
-                })
-            end
-
-            closeCharacterSelection(player)
-        end
+    local game_settings = Global.getVar('game_settings')
+    if game_settings.initialized ~= true then
+        broadcastToAll(player.steam_name .. " cannot select a character the game has not started.", {
+            0.8,
+            0.05,
+            0.05
+        })
+    else
+      local name = character_map[show[player.color].currentId]
+      if name ~= nil then
+          local character = characters[name]
+          if character ~= nil then
+              local playerHand = player.getPlayerHand()
+              if playerHand then
+                  local success = Global.call("makeDeck", player)
+                  if success == true then
+                      for i, id in pairs(character.chips) do
+                        local clone = getObjectFromGUID(id).clone()
+                        Wait.condition(function()
+                            clone.deal(1, player.color)
+                        end, function()
+                            return clone.getGUID() ~= id
+                        end)
+                      end
+                  end
+              else
+                  broadcastToAll(player.steam_name .. " cannot select a character because the color " .. player.color .. " has no hand region.", {
+                      0.8,
+                      0.05,
+                      0.05
+                  })
+              end
+  
+              closeCharacterSelection(player)
+          end
+      end
     end
-
 end
 
 function toggleCharacterList(player)

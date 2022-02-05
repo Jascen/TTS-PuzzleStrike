@@ -906,6 +906,8 @@ end
 function onSave()
     saved_data = JSON.encode({
         player_data = player_data,
+        -- TODO: Save game settings
+        -- TODO: Save current player turn
     })
 
     -- saved_data = ""
@@ -1066,13 +1068,13 @@ function startGame()
 
     closeNewGame()
     Turns.enable = true
+    -- TODO: Show/enable the player select cards
 end
 -- UI - New Game --
 
 -- UI - Character Selection --
 
 function makeDeck(player)
-  if game_settings.initialized == true then
     local playerHand = player.getPlayerHand()
     if playerHand then
       local crash_bag = getObjectFromGUID(bags["Crash"].id)
@@ -1083,8 +1085,6 @@ function makeDeck(player)
         return true
       end
     end
-  end
-  return false
 end
 
 -- UI - Character Selection --
