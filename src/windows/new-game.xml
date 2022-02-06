@@ -1,0 +1,16 @@
+<Panel id="NewGame" class="Window" width="300" height="130" visibility="host" active="false" rectAlignment="MiddleCenter" color="#69696940">
+    <Panel class="TopBar" width="300" color="rgba(0,0,0,1)" />
+    <Text class="WindowTitle" fontSize="18" height="20" offsetXY="0 -5" rectAlignment="UpperCenter" color="#FFFFFF">New Game</Text>
+
+    <Panel color="rgba(0,0,0,1)" offsetXY="0 -25">
+        <Text text="Bank Selection" offsetXY="-90 30" />
+        <Dropdown onValueChanged="selectMode" offsetXY="50 30">
+            <Option>Random</Option>
+            <Option>Manual</Option>
+            <Option>First Game</Option>
+        </Dropdown>
+        <Panel width="180" offsetXY="0 -30">
+            <Button onClick="startGame" text="Start Game" height="50"/>
+        </Panel>
+    </Panel>
+</Panel>

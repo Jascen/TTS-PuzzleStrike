@@ -1,0 +1,62 @@
+<Panel id="Blue_CharacterList" visibility="Blue" class="Window" width="800" height="600" active="false" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Select A Character</Text>
+    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
+
+    <Panel offsetXY="160 250">
+        <Text offsetXY="20 0">Quick Select</Text>
+        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
+            <Option>- None -</Option>
+            <Option>Argagarg Garg</Option>
+            <Option>Bal-Bas-Beta</Option>
+            <Option>Beginner</Option>
+            <Option>Captain Zane</Option>
+            <Option>Garus Rook</Option>
+            <Option>General Onimaru</Option>
+            <Option>Gloria Grayson</Option>
+            <Option>Grave Stormborne</Option>
+            <Option>Gwen Grayson</Option>
+            <Option>Jaina Stormborne</Option>
+            <Option>Jefferson DeGrey</Option>
+            <Option>Lum Bam-foo</Option>
+            <Option>M. Persephone</Option>
+            <Option>Master Menelker</Option>
+            <Option>Master Midori</Option>
+            <Option>Max Geiger</Option>
+            <Option>Sirus Quince</Option>
+            <Option>Setsuki Hiruki</Option>
+            <Option>Troq Bashar</Option>
+            <Option>Valerie Rose</Option>
+            <Option>Vendetta</Option>
+        </Dropdown>
+    </Panel>
+
+    <Panel height="20" rectAlignment="UpperCenter" offsetXY="0 -75">
+        <Text id="Blue_char_name" resizeTextForBestFit="true" height="50" />
+        <Text id="Blue_char_desc" offsetXY="0 -40" />
+    </Panel>
+
+    <Panel height="300" offsetXY="-250 0">
+        <Image id="Blue_char_pic" width="200"></Image>
+        <Panel offsetXY="200 0">
+            <Image id="Blue_char_chip_1" width="154"></Image>
+            <Image id="Blue_char_chip_2" width="154" offsetXY="175 0"></Image>
+            <Image id="Blue_char_chip_3" width="154" offsetXY="350 0"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="30" offsetXY="-325 -260">
+        <Button onClick="9ec2ec/prevChar" height="30" width="100">
+            <Text>Previous</Text>
+        </Button>
+        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
+            <Text>Next</Text>
+        </Button>
+        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+            <Text>Random</Text>
+        </Button>
+        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+            <Text>Select</Text>
+        </Button>
+    </Panel>
+</Panel>

@@ -1,0 +1,32 @@
+<Panel id="ToolManager" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
+    <Panel class="TopBar" width="110"/>
+    <Text class="WindowTitle">Tools</Text>
+
+    <Panel id="ToolManager_content" width="90" offsetXY="0 75">
+
+        <Button onClick="drawMaxHand" height="50" tooltipPosition="Left" tooltip="Draw to your max hand size">
+            <Image image="clone" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Draw</Text>
+        </Button>
+
+        <Button onClick="discardHand" height="50" offsetXY="0 -60" tooltipPosition="Left" tooltip="Discard your hand">
+            <Image image="minus" preserveAspect="1" width="15" offsetXY="-30 0"/>
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Discard</Text>
+        </Button>
+
+        <Panel height="50" offsetXY="0 -180">
+            <Button onClick="cycleDiscard" width="40" offsetXY="-25 0" tooltipPosition="Below" tooltip="Put your discard pile into your bag">
+                <Image image="recycle" preserveAspect="1" width="15" />
+            </Button>
+
+            <Button onClick="shuffleDeck" width="40" offsetXY="25 0" padding="10" tooltipPosition="Below" tooltip="Shuffle your bag">
+                <Image image="sync-alt" preserveAspect="1" width="15" />
+            </Button>
+        </Panel>
+
+        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gems in your hand">
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Show $$$</Text>
+        </Button>
+
+    </Panel>
+</Panel>

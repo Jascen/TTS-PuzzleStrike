@@ -1,0 +1,13 @@
+<Panel id="Blue_DiscardPrompt" class="Window" width="250" height="75" active="true" color="#69696940" visibility="Black">
+    <Panel height="30" offsetXY="0 20">
+        <Text>Move chips to discard pile?</Text>
+        <Panel height="30" offsetXY="-55 -30">
+            <Button onClick="723c3f/yesDiscardClicked" height="30" width="100">
+                <Text>Yes</Text>
+            </Button>
+            <Button onClick="723c3f/noDiscardClicked" height="30" width="100" offsetXY="110 0">
+                <Text>No</Text>
+            </Button>
+        </Panel>
+    </Panel>
+</Panel>

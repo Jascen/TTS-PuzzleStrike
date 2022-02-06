@@ -1,0 +1,16 @@
+<Defaults>
+    <Text color="#FAFAFA"/>
+    <Button color="#828282"/>
+    <Button class="primary" color="#000000"/>
+    <Image preserveAspect="true"/>
+
+    <!-- Defining the standard appearance of the window -->
+    <Panel class="Window" rectAlignment="Middle" returnToOriginalPositionWhenReleased="false" allowDragging="true" outline="rgba(0, 0, 0, 0.95)" />
+    <Panel class="TopBar" height="30" color="rgba(0,0,0,0.95)" rectAlignment="UpperCenter" />
+    <Button class="minimizeButton" width="20" height="20" rectAlignment="UpperRight" offsetXY="-25 -5" text="_" color="#eeeeee" textColor="#000000"/>
+    <Button class="closeButton" width="20" height="20" rectAlignment="UpperRight" offsetXY="-5 -5" color="#990000" textColor="#FFFFFF" text="X" />
+    <Text class="WindowTitle" fontSize="18" height="20" offsetXY="0 -5" rectAlignment="UpperCenter" color="#FFFFFF" />
+
+    <!-- Defining the standard appearance of a toolbar button -->
+    <Button class="toolManagerButton" width="90" height="50" tooltipPosition="Left" />
+</Defaults>
