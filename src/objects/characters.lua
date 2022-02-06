@@ -313,14 +313,26 @@ function randomizeCharacter(player)
 end
 
 function toggleCharacterList(player)
-    selectCharacter(player)
+    for _, color in pairs(Player.getAvailableColors()) do
+        if player.color == color then
+            selectCharacter(player)
+        
+            local opened = UI.getAttribute(player.color .. "_CharacterList", "active")
+            if opened == "True" then
+                UI.setAttribute(player.color .. "_CharacterList", "active", false)
+            else
+                UI.setAttribute(player.color .. "_CharacterList", "active", true)
+            end
 
-    local opened = UI.getAttribute(player.color .. "_CharacterList", "active")
-    if opened == "True" then
-        UI.setAttribute(player.color .. "_CharacterList", "active", false)
-    else
-        UI.setAttribute(player.color .. "_CharacterList", "active", true)
+            return
+        end
     end
+
+    broadcastToAll(player.steam_name .. " must choose Red, Purple, Green, or Blue.", {
+        0.8,
+        0.05,
+        0.05
+    })
 end
 
 function selectCharacter(player)
