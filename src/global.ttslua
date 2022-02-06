@@ -49,16 +49,20 @@ player_data = {
 show = {
     Scoreboard = {
         Purple = {
-            visible = true
+            visible = true,
+            currentId = 1
         },
         Red = {
-            visible = true
+            visible = true,
+            currentId = 1
         },
         Green = {
-            visible = true
+            visible = true,
+            currentId = 1
         },
         Blue = {
-            visible = true
+            visible = true,
+            currentId = 1
         }
     }
 }
