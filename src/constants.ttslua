@@ -1,0 +1,477 @@
+constants = {}
+
+constants.labels = {
+    "190e7e",
+    "b7b868",
+    "edcf5c",
+    "6858e1",
+    "f83cc0",
+    "a85bf8",
+    "0ff78d",
+    "e7067a",
+    "183d8e",
+    "84efa2"
+}
+
+constants.zones = {
+    Purple = {
+        discard = "2aa64c",
+        hand = "dc0a66",
+        pile = "7a9116",
+        ongoing = "f067b2",
+        deck = "5756fd"
+    },
+    Red = {
+        discard = "7dd531",
+        hand = "a54c95",
+        pile = "f94f23",
+        ongoing = "0015e0",
+        deck = "be62af"
+    },
+    Green = {
+        discard = "62dd1d",
+        hand = "936f4b",
+        pile = "0764bb",
+        ongoing = "499881",
+        deck = "be4cf3"
+    },
+    Blue = {
+        discard = "24bff3",
+        hand = "c8a9c8",
+        pile = "03ee5d",
+        ongoing = "f4da82",
+        deck = "a36e4a"
+    }
+}
+
+constants.modes = {
+    random = "random",
+    draft = "draft",
+    manual = "manual",
+    beginner = "beginner"
+}
+
+constants.bank_zone = "d0169e"
+constants.character_sheet = "9ec2ec"
+
+constants.placeholders = {
+    -- puzzle_bank_placeholders
+    "e296d1",
+    "ae1934",
+    "1151db",
+    "8c3632",
+    "7292a0",
+    "6e6057",
+    "54b31e",
+    "27214b",
+    "e66d7b",
+    "9270ca",
+
+    -- default_bank_placeholders
+    "6dfdd1",
+    "be52c5",
+    "f09070",
+    "fd7148",
+    "c76568",
+    "139bdb",
+    "05bfb9",
+    "7a4abd"
+}
+
+constants.player_mats = {
+    "bf0d9a", -- Purple play mat
+    "127d91", -- Red play mat
+    "81be67", -- Green play mat
+    "723c3f" -- Blue play mat
+}
+  
+constants.bags = {}
+constants.bags["1 Gem"] = {
+  infinite = "03f9d2",
+  id = "ecbd4d",
+  name = "1 Gem",
+  position = {
+    -17.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["2 Gem"] = {
+  infinite = "58de7e",
+  id = "4d929f",
+  name = "2 Gem",
+  position = {
+    -12.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["3 Gem"] = {
+  infinite = "b14ade",
+  id = "2ab1eb",
+  name = "3 Gem",
+  position = {
+    -7.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["4 Gem"] = {
+  infinite = "bebcac",
+  id = "834956",
+  name = "4 Gem",
+  position = {
+    -2.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["Wound"] = {
+  infinite = "019c62",
+  id = "6b8541",
+  name = "Wound",
+  position = {
+    2.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["Combine"] = {
+  infinite = "dfc232",
+  id = "63b06e",
+  name = "Combine",
+  position = {
+    7.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["Crash"] = {
+  infinite = "acb599",
+  id = "992679",
+  name = "Crash",
+  position = {
+    12.5,
+    1.75,
+    -2.5
+  }
+}
+constants.bags["Double Crash"] = {
+  infinite = "b4a728",
+  id = "30747e",
+  name = "Double Crash",
+  position = {
+    17.5,
+    1.75,
+    -2.5
+  }
+}
+
+constants.chip_obj = {
+    just_a_scratch = {
+        id = "b8a24c",
+        key = "just_a_scratch",
+        name = "Just a Scratch",
+        cost = 1
+    },
+    risky_move = {
+        key = "risky_move",
+        id = "c556ac",
+        name = "Risky Move",
+        cost = 1
+    },
+    secret_move = {
+        id = "4c302d",
+        key = "secret_move",
+        name = "Secret Move",
+        cost = 1
+    },
+    really_annoying = {
+        id = "88154b",
+        key = "really_annoying",
+        name = "Really Annoying",
+        cost = 1
+    },
+    thinking_ahead = {
+        id = "212358",
+        key = "thinking_ahead",
+        name = "Thinking Ahead",
+        cost = 2
+    },
+    ebb_or_flow = {
+        id = "941a1f",
+        key = "ebb_or_flow",
+        name = "Ebb or Flow",
+        cost = 2
+    },
+    money_for_nothing = {
+        id = "ab7639",
+        key = "money_for_nothing",
+        name = "Money for Nothing",
+        cost = 2
+    },
+    repeated_jabs = {
+        id = "9347bd",
+        key = "repeated_jabs",
+        name = "Repeated Jabs",
+        cost = 2
+    },
+    blues_are_good = {
+        id = "9f307b",
+        key = "blues_are_good",
+        name = "Blues are Good",
+        cost = 3
+    },
+    color_panic = {
+        id = "7797cb",
+        key = "color_panic",
+        name = "Color Panic",
+        cost = 3
+    },
+    chip_damage = {
+        id = "47d8fa",
+        key = "chip_damage",
+        name = "Chip Damage",
+        cost = 3
+    },
+    now_or_later = {
+        id = "e9d5ee",
+        key = "now_or_later",
+        name = "Now or Later",
+        cost = 2
+    },
+    its_a_trap = {
+        id = "a52786",
+        key = "its_a_trap",
+        name = "It's a trap",
+        cost = 2
+    },
+    sale_prices = {
+        id = "5e08ca",
+        key = "sale_prices",
+        name = "Sale Prices",
+        cost = 2
+    },
+    one_true_style = {
+        id = "7a3c64",
+        key = "one_true_style",
+        name = "One True Style",
+        cost = 3
+    },
+    bang_then_fizzle = {
+        id = "968d9e",
+        key = "bang_then_fizzle",
+        name = "Bang then Fizzle",
+        cost = 2
+    },
+    recklessness = {
+        id = "3af67e",
+        key = "recklessness",
+        name = "Recklessness",
+        cost = 3
+    },
+    button_mashing = {
+        id = "6519c7",
+        key = "button_mashing",
+        name = "Button Mashing",
+        cost = 3
+    },
+    risk_to_riskonade = {
+        id = "b267f0",
+        key = "risk_to_riskonade",
+        name = "Risk to Riskonade",
+        cost = 3
+    },
+    dashing_strike = {
+        id = "43d1f4",
+        key = "dashing_strike",
+        name = "Dashing Strike",
+        cost = 4
+    },
+    improvisation = {
+        id = "5900cf",
+        key = "improvisation",
+        name = "Improvisation",
+        cost = 4
+    },
+    ouch = {
+        id = "239109",
+        key = "ouch",
+        name = "Ouch!",
+        cost = 4
+    },
+    pick_your_poison = {
+        id = "365d9a",
+        key = "pick_your_poison",
+        name = "Pick Your Poison",
+        cost = 4
+    },
+    stolen_purples = {
+        id = "118421",
+        key = "stolen_purples",
+        name = "Stolen Purples",
+        cost = 4
+    },
+    combinatorics = {
+        id = "1a28d6",
+        key = "combinatorics",
+        name = "Combinatorics",
+        cost = 4
+    },
+    mix_master = {
+        id = "61046b",
+        key = "mix_master",
+        name = "Mix-Master",
+        cost = 4
+    },
+    gems_to_gemonade = {
+        id = "c83ab0",
+        key = "gems_to_gemonade",
+        name = "Gems to Gemonade",
+        cost = 4
+    },
+    hundred_fist_frenzy = {
+        id = "d8338a",
+        key = "hundred_fist_frenzy",
+        name = "Hundred-Fist Frenzy",
+        cost = 4
+    },
+    chips_for_free = {
+        id = "44ddfa",
+        key = "chips_for_free",
+        name = "Chips for Free",
+        cost = 4
+    },
+    iron_defense = {
+        id = "3d46f4",
+        key = "iron_defense",
+        name = "Iron Defense",
+        cost = 4
+    },
+    axe_kick = {
+        id = "454e9a",
+        key = "axe_kick",
+        name = "Axe Kick",
+        cost = 5
+    },
+    signature_move = {
+        id = "f260d5",
+        key = "signature_move",
+        name = "Signature Move",
+        cost = 5
+    },
+    option_select = {
+        id = "a0b631",
+        key = "option_select",
+        name = "? Option Select ?",
+        cost = 6
+    },
+    punch_punch_kick = {
+        id = "0863b9",
+        key = "punch_punch_kick",
+        name = "Punch, Punch, Kick",
+        cost = 6
+    },
+    combos_are_hard = {
+        id = "1938cd",
+        key = "combos_are_hard",
+        name = "Combos Are Hard",
+        cost = 6
+    },
+    x_copy = {
+        id = "42cb20",
+        key = "x_copy",
+        name = "X-Copy",
+        cost = 6
+    },
+    custom_combo = {
+        id = "94595a",
+        key = "custom_combo",
+        name = "Custom Combo",
+        cost = 7
+    },
+    its_combo_time = {
+        id = "b1065f",
+        key = "its_combo_time",
+        name = "It's Combo Time",
+        cost = 8
+    },
+    degenerate_trasher = {
+        id = "e99661",
+        key = "degenerate_trasher",
+        name = "Degenerate Trasher",
+        cost = 8
+    },
+    the_hammer = {
+        id = "996f5e",
+        key = "the_hammer",
+        name = "! The Hammer !",
+        cost = 12
+    },
+    master_puzzler = {
+        id = "0cc68f",
+        key = "master_puzzler",
+        name = "! Master Puzzler !",
+        cost = 12
+    },
+    safe_keeping = {
+        id = "bdf9b0",
+        key = "safe_keeping",
+        name = "Safe Keeping",
+        cost = 1
+    },
+    training_day = {
+        id = "da31e8",
+        key = "training_day",
+        name = "Training Day",
+        cost = 2
+    },
+    knockdown = {
+        id = "b75ce9",
+        key = "knockdown",
+        name = "Knockdown",
+        cost = 2
+    },
+    sneak_attack = {
+        id = "5cff28",
+        key = "sneak_attack",
+        name = "Sneak Attack",
+        cost = 3
+    },
+    draw_three = {
+        id = "0aa71f",
+        key = "draw_three",
+        name = "Draw Three",
+        cost = 3
+    },
+    gem_essence = {
+        id = "3e5a87",
+        key = "gem_essence",
+        name = "Gem Essence",
+        cost = 3
+    },
+    one_two_punch = {
+        id = "796ec3",
+        key = "one_two_punch",
+        name = "One-Two Punch",
+        cost = 4
+    },
+    self_improvement = {
+        id = "369ce3",
+        key = "self_improvement",
+        name = "Self-Improvement",
+        cost = 4
+    },
+    one_of_each = {
+        id = "2d70b9",
+        key = "one_of_each",
+        name = "One of Each",
+        cost = 5
+    },
+    roundhouse = {
+        id = "6cff4c",
+        key = "roundhouse",
+        name = "Roundhouse",
+        cost = 6
+    }
+}

@@ -1,17 +1,6 @@
-current_bank = {}
+require("constants")
 
-labels = {
-    "190e7e",
-    "b7b868",
-    "edcf5c",
-    "6858e1",
-    "f83cc0",
-    "a85bf8",
-    "0ff78d",
-    "e7067a",
-    "183d8e",
-    "84efa2"
-}
+current_bank = {}
 
 game_settings = {
   initialized = false,
@@ -68,483 +57,20 @@ show = {
     }
 }
 
-player_mats = {
-  "bf0d9a", -- Purple play mat
-  "127d91", -- Red play mat
-  "81be67", -- Green play mat
-  "723c3f" -- Blue play mat
-}
-
-bank_zone = "d0169e"
-character_sheet = "9ec2ec"
-
-placeholders = {
-    -- puzzle_bank_placeholders
-    "e296d1",
-    "ae1934",
-    "1151db",
-    "8c3632",
-    "7292a0",
-    "6e6057",
-    "54b31e",
-    "27214b",
-    "e66d7b",
-    "9270ca",
-
-    -- default_bank_placeholders
-    "6dfdd1",
-    "be52c5",
-    "f09070",
-    "fd7148",
-    "c76568",
-    "139bdb",
-    "05bfb9",
-    "7a4abd"
-}
-
-zones = {
-    Purple = {
-        discard = "2aa64c",
-        hand = "dc0a66",
-        pile = "7a9116",
-        ongoing = "f067b2",
-        deck = "5756fd"
-    },
-    Red = {
-        discard = "7dd531",
-        hand = "a54c95",
-        pile = "f94f23",
-        ongoing = "0015e0",
-        deck = "be62af"
-    },
-    Green = {
-        discard = "62dd1d",
-        hand = "936f4b",
-        pile = "0764bb",
-        ongoing = "499881",
-        deck = "be4cf3"
-    },
-    Blue = {
-        discard = "24bff3",
-        hand = "c8a9c8",
-        pile = "03ee5d",
-        ongoing = "f4da82",
-        deck = "a36e4a"
-    }
-}
-
-modes = {
-    random = "random",
-    draft = "draft",
-    manual = "manual",
-    beginner = "beginner"
-}
-
-bags = {}
-bags["1 Gem"] = {
-  infinite = "03f9d2",
-  id = "ecbd4d",
-  name = "1 Gem",
-  position = {
-    -17.5,
-    1.75,
-    -2.5
-  }
-}
-bags["2 Gem"] = {
-  infinite = "58de7e",
-  id = "4d929f",
-  name = "2 Gem",
-  position = {
-    -12.5,
-    1.75,
-    -2.5
-  }
-}
-bags["3 Gem"] = {
-  infinite = "b14ade",
-  id = "2ab1eb",
-  name = "3 Gem",
-  position = {
-    -7.5,
-    1.75,
-    -2.5
-  }
-}
-bags["4 Gem"] = {
-  infinite = "bebcac",
-  id = "834956",
-  name = "4 Gem",
-  position = {
-    -2.5,
-    1.75,
-    -2.5
-  }
-}
-bags["Wound"] = {
-  infinite = "019c62",
-  id = "6b8541",
-  name = "Wound",
-  position = {
-    2.5,
-    1.75,
-    -2.5
-  }
-}
-bags["Combine"] = {
-  infinite = "dfc232",
-  id = "63b06e",
-  name = "Combine",
-  position = {
-    7.5,
-    1.75,
-    -2.5
-  }
-}
-bags["Crash"] = {
-  infinite = "acb599",
-  id = "992679",
-  name = "Crash",
-  position = {
-    12.5,
-    1.75,
-    -2.5
-  }
-}
-bags["Double Crash"] = {
-  infinite = "b4a728",
-  id = "30747e",
-  name = "Double Crash",
-  position = {
-    17.5,
-    1.75,
-    -2.5
-  }
-}
-
-chip_obj = {
-    just_a_scratch = {
-        id = "b8a24c",
-        key = "just_a_scratch",
-        name = "Just a Scratch",
-        cost = 1
-    },
-    risky_move = {
-        key = "risky_move",
-        id = "c556ac",
-        name = "Risky Move",
-        cost = 1
-    },
-    secret_move = {
-        id = "4c302d",
-        key = "secret_move",
-        name = "Secret Move",
-        cost = 1
-    },
-    really_annoying = {
-        id = "88154b",
-        key = "really_annoying",
-        name = "Really Annoying",
-        cost = 1
-    },
-    thinking_ahead = {
-        id = "212358",
-        key = "thinking_ahead",
-        name = "Thinking Ahead",
-        cost = 2
-    },
-    ebb_or_flow = {
-        id = "941a1f",
-        key = "ebb_or_flow",
-        name = "Ebb or Flow",
-        cost = 2
-    },
-    money_for_nothing = {
-        id = "ab7639",
-        key = "money_for_nothing",
-        name = "Money for Nothing",
-        cost = 2
-    },
-    repeated_jabs = {
-        id = "9347bd",
-        key = "repeated_jabs",
-        name = "Repeated Jabs",
-        cost = 2
-    },
-    blues_are_good = {
-        id = "9f307b",
-        key = "blues_are_good",
-        name = "Blues are Good",
-        cost = 3
-    },
-    color_panic = {
-        id = "7797cb",
-        key = "color_panic",
-        name = "Color Panic",
-        cost = 3
-    },
-    chip_damage = {
-        id = "47d8fa",
-        key = "chip_damage",
-        name = "Chip Damage",
-        cost = 3
-    },
-    now_or_later = {
-        id = "e9d5ee",
-        key = "now_or_later",
-        name = "Now or Later",
-        cost = 2
-    },
-    its_a_trap = {
-        id = "a52786",
-        key = "its_a_trap",
-        name = "It's a trap",
-        cost = 2
-    },
-    sale_prices = {
-        id = "5e08ca",
-        key = "sale_prices",
-        name = "Sale Prices",
-        cost = 2
-    },
-    one_true_style = {
-        id = "7a3c64",
-        key = "one_true_style",
-        name = "One True Style",
-        cost = 3
-    },
-    bang_then_fizzle = {
-        id = "968d9e",
-        key = "bang_then_fizzle",
-        name = "Bang then Fizzle",
-        cost = 2
-    },
-    recklessness = {
-        id = "3af67e",
-        key = "recklessness",
-        name = "Recklessness",
-        cost = 3
-    },
-    button_mashing = {
-        id = "6519c7",
-        key = "button_mashing",
-        name = "Button Mashing",
-        cost = 3
-    },
-    risk_to_riskonade = {
-        id = "b267f0",
-        key = "risk_to_riskonade",
-        name = "Risk to Riskonade",
-        cost = 3
-    },
-    dashing_strike = {
-        id = "43d1f4",
-        key = "dashing_strike",
-        name = "Dashing Strike",
-        cost = 4
-    },
-    improvisation = {
-        id = "5900cf",
-        key = "improvisation",
-        name = "Improvisation",
-        cost = 4
-    },
-    ouch = {
-        id = "239109",
-        key = "ouch",
-        name = "Ouch!",
-        cost = 4
-    },
-    pick_your_poison = {
-        id = "365d9a",
-        key = "pick_your_poison",
-        name = "Pick Your Poison",
-        cost = 4
-    },
-    stolen_purples = {
-        id = "118421",
-        key = "stolen_purples",
-        name = "Stolen Purples",
-        cost = 4
-    },
-    combinatorics = {
-        id = "1a28d6",
-        key = "combinatorics",
-        name = "Combinatorics",
-        cost = 4
-    },
-    mix_master = {
-        id = "61046b",
-        key = "mix_master",
-        name = "Mix-Master",
-        cost = 4
-    },
-    gems_to_gemonade = {
-        id = "c83ab0",
-        key = "gems_to_gemonade",
-        name = "Gems to Gemonade",
-        cost = 4
-    },
-    hundred_fist_frenzy = {
-        id = "d8338a",
-        key = "hundred_fist_frenzy",
-        name = "Hundred-Fist Frenzy",
-        cost = 4
-    },
-    chips_for_free = {
-        id = "44ddfa",
-        key = "chips_for_free",
-        name = "Chips for Free",
-        cost = 4
-    },
-    iron_defense = {
-        id = "3d46f4",
-        key = "iron_defense",
-        name = "Iron Defense",
-        cost = 4
-    },
-    axe_kick = {
-        id = "454e9a",
-        key = "axe_kick",
-        name = "Axe Kick",
-        cost = 5
-    },
-    signature_move = {
-        id = "f260d5",
-        key = "signature_move",
-        name = "Signature Move",
-        cost = 5
-    },
-    option_select = {
-        id = "a0b631",
-        key = "option_select",
-        name = "? Option Select ?",
-        cost = 6
-    },
-    punch_punch_kick = {
-        id = "0863b9",
-        key = "punch_punch_kick",
-        name = "Punch, Punch, Kick",
-        cost = 6
-    },
-    combos_are_hard = {
-        id = "1938cd",
-        key = "combos_are_hard",
-        name = "Combos Are Hard",
-        cost = 6
-    },
-    x_copy = {
-        id = "42cb20",
-        key = "x_copy",
-        name = "X-Copy",
-        cost = 6
-    },
-    custom_combo = {
-        id = "94595a",
-        key = "custom_combo",
-        name = "Custom Combo",
-        cost = 7
-    },
-    its_combo_time = {
-        id = "b1065f",
-        key = "its_combo_time",
-        name = "It's Combo Time",
-        cost = 8
-    },
-    degenerate_trasher = {
-        id = "e99661",
-        key = "degenerate_trasher",
-        name = "Degenerate Trasher",
-        cost = 8
-    },
-    the_hammer = {
-        id = "996f5e",
-        key = "the_hammer",
-        name = "! The Hammer !",
-        cost = 12
-    },
-    master_puzzler = {
-        id = "0cc68f",
-        key = "master_puzzler",
-        name = "! Master Puzzler !",
-        cost = 12
-    },
-    safe_keeping = {
-        id = "bdf9b0",
-        key = "safe_keeping",
-        name = "Safe Keeping",
-        cost = 1
-    },
-    training_day = {
-        id = "da31e8",
-        key = "training_day",
-        name = "Training Day",
-        cost = 2
-    },
-    knockdown = {
-        id = "b75ce9",
-        key = "knockdown",
-        name = "Knockdown",
-        cost = 2
-    },
-    sneak_attack = {
-        id = "5cff28",
-        key = "sneak_attack",
-        name = "Sneak Attack",
-        cost = 3
-    },
-    draw_three = {
-        id = "0aa71f",
-        key = "draw_three",
-        name = "Draw Three",
-        cost = 3
-    },
-    gem_essence = {
-        id = "3e5a87",
-        key = "gem_essence",
-        name = "Gem Essence",
-        cost = 3
-    },
-    one_two_punch = {
-        id = "796ec3",
-        key = "one_two_punch",
-        name = "One-Two Punch",
-        cost = 4
-    },
-    self_improvement = {
-        id = "369ce3",
-        key = "self_improvement",
-        name = "Self-Improvement",
-        cost = 4
-    },
-    one_of_each = {
-        id = "2d70b9",
-        key = "one_of_each",
-        name = "One of Each",
-        cost = 5
-    },
-    roundhouse = {
-        id = "6cff4c",
-        key = "roundhouse",
-        name = "Roundhouse",
-        cost = 6
-    }
-}
-
 ----- Bank manipulation
 
 --- Rotates the bank to look at the side of the board based on whose turn it is
 function onPlayerTurnStart(current, previous)
     if previous == nil or previous == '' then return end
 
-    local bankZone = getObjectFromGUID(bank_zone)
+    local bankZone = getObjectFromGUID(constants.bank_zone)
     if bankZone == nil then return end
 
     local bankObjects = bankZone.getObjects()
     if bankObjects == nil then return end
 
     -- Build unique list of highest object count
-    for _, o in pairs(getObjectFromGUID(bank_zone).getObjects()) do
+    for _, o in pairs(getObjectFromGUID(constants.bank_zone).getObjects()) do
         if o.getLock() ~= true and o.tag == 'Tile' then
             local name = o.getName()
             if name ~= nil and name ~= "" then
@@ -557,7 +83,7 @@ function onPlayerTurnStart(current, previous)
                         p[3]
                     }, false, true)
                 else
-                    local bag = bags[name]
+                    local bag = constants.bags[name]
                     if bag ~= nil and bag.id ~= nil then
                             getObjectFromGUID(bag.id).putObject(o)
                     end
@@ -586,7 +112,7 @@ function rotateBank(degree)
     if degree == 180 then z = 1 end
 
     local i = 0
-    for _, label in pairs(labels) do
+    for _, label in pairs(constants.labels) do
         local o = getObjectFromGUID(label)
         o.setPosition({
             x = -22.25 + (5 * i),
@@ -602,7 +128,7 @@ function rotateBank(degree)
         i = i + 1
     end
 
-    for _, o in pairs(getObjectFromGUID(bank_zone).getObjects()) do
+    for _, o in pairs(getObjectFromGUID(constants.bank_zone).getObjects()) do
         local rotation = o.getRotation()
         o.setRotation({
             rotation[1],
@@ -630,7 +156,7 @@ function getRandomChips(key_src, count, excluded_keys)
         local index = key_src[math.random(1, #key_src)]
         if not setContains(selectedKeys, index) then
             if not setContains(excluded_keys, index) then
-                addToSet(selectedKeys, index, chip_obj[index])
+                addToSet(selectedKeys, index, constants.chip_obj[index])
                 i = i + 1
             end
         end
@@ -649,7 +175,7 @@ end
 
 function onObjectEnterContainer(container, object)
     local container_id = container.getGUID()
-    for color, o in pairs(zones) do
+    for color, o in pairs(constants.zones) do
         for key, id in pairs(o) do
             if container_id == id then
                 if key == "deck" then
@@ -670,7 +196,7 @@ function onObjectLeaveContainer(container, object)
     end
 
     local container_id = container.getGUID()
-    for color, o in pairs(zones) do
+    for color, o in pairs(constants.zones) do
         for key, id in pairs(o) do
             if container_id == id then
                 if key == "deck" then
@@ -685,7 +211,7 @@ end
 
 function onObjectEnterScriptingZone(zone, object)
     local zone_id = zone.getGUID()
-    for color, o in pairs(zones) do
+    for color, o in pairs(constants.zones) do
         for key, id in pairs(o) do
             if zone_id == id then
                 if key == "pile" then -- Count gem pile
@@ -717,7 +243,7 @@ end
 
 function onObjectLeaveScriptingZone(zone, object)
     local zone_id = zone.getGUID()
-    for color, o in pairs(zones) do
+    for color, o in pairs(constants.zones) do
         for key, id in pairs(o) do
             if zone_id == id then
                 if key == "pile" then -- Count gem pile
@@ -785,8 +311,8 @@ function countObjects(zone)
 end
 
 function isPlayerMat(id)
-  for i=1,#player_mats do
-     if player_mats[i] == id then 
+  for i=1,#constants.player_mats do
+     if constants.player_mats[i] == id then 
         return true
      end
   end
@@ -856,7 +382,7 @@ function buildBank_ChipRows(collection)
 end
 
 function getChip(chip_id)
-    local clone = getObjectFromGUID(chip_obj[chip_id].id).clone()
+    local clone = getObjectFromGUID(constants.chip_obj[chip_id].id).clone()
     clone.setCustomObject({
         stackable = true
     })
@@ -1029,7 +555,7 @@ end
 -- UI - Host Options --
 
 -- UI - New Game --
-mode = modes.random
+mode = constants.modes.random
 
 function togglePlaceholder(_, value)
     if value == "True" then
@@ -1038,7 +564,7 @@ function togglePlaceholder(_, value)
       game_settings.showLabels = false
     end
 
-    for i, id in ipairs(labels) do
+    for i, id in ipairs(constants.labels) do
         local label = getObjectFromGUID(id)
         if game_settings.showLabels == true then
             label.TextTool.setValue(tostring(i))
@@ -1054,20 +580,20 @@ end
 
 function selectMode(player, option, id)
     if option == "Random" then
-        mode = modes.random
+        mode = constants.modes.random
     elseif option == "Manual" then
-        mode = modes.manual
+        mode = constants.modes.manual
     elseif option == "Draft" then
-        mode = modes.draft
+        mode = constants.modes.draft
     elseif option == "First Game" then
-        mode = modes.beginner
+        mode = constants.modes.beginner
     end
 end
 
 function setupDefaultBoard()
   local setup = getObjectFromGUID("5e08f3")
   if setup ~= nil then
-    for _, o in pairs(bags) do
+    for _, o in pairs(constants.bags) do
       local infinite_bag = setup.takeObject({guid = o.infinite})
       if infinite_bag ~= nil then
         local clone = infinite_bag.takeObject()
@@ -1089,35 +615,35 @@ function startGame()
   game_settings.initialized = true
 
   draftBoard = getObjectFromGUID(draftBoard_id)
-  chip_keys = extractKeysFromTable(chip_obj)
+  chip_keys = extractKeysFromTable(constants.chip_obj)
 
   setupDefaultBoard()
 
     local chips = nil
-    if mode == modes.random then
+    if mode == constants.modes.random then
         -- TODO: Promote?
         -- TODO: Place stage?
         chips = getRandomChips(chip_keys, 10, {})
         buildBank_ChipRows(chips)
         -- destroyDraftBoard()
-    elseif mode == modes.beginner then
+    elseif mode == constants.modes.beginner then
         -- TODO: Promote?
         -- TODO: Place stage?
 
         chips = {}
-        chips["combos_are_hard"] = chip_obj["combos_are_hard"]
-        chips["draw_three"] = chip_obj["draw_three"]
-        chips["gem_essence"] = chip_obj["gem_essence"]
-        chips["knockdown"] = chip_obj["knockdown"]
-        chips["one_of_each"] = chip_obj["one_of_each"]
-        chips["one_two_punch"] = chip_obj["one_two_punch"]
-        chips["risky_move"] = chip_obj["risky_move"]
-        chips["sale_prices"] = chip_obj["sale_prices"]
-        chips["self_improvement"] = chip_obj["self_improvement"]
-        chips["sneak_attack"] = chip_obj["sneak_attack"]
+        chips["combos_are_hard"] = constants.chip_obj["combos_are_hard"]
+        chips["draw_three"] = constants.chip_obj["draw_three"]
+        chips["gem_essence"] = constants.chip_obj["gem_essence"]
+        chips["knockdown"] = constants.chip_obj["knockdown"]
+        chips["one_of_each"] = constants.chip_obj["one_of_each"]
+        chips["one_two_punch"] = constants.chip_obj["one_two_punch"]
+        chips["risky_move"] = constants.chip_obj["risky_move"]
+        chips["sale_prices"] = constants.chip_obj["sale_prices"]
+        chips["self_improvement"] = constants.chip_obj["self_improvement"]
+        chips["sneak_attack"] = constants.chip_obj["sneak_attack"]
         buildBank_ChipRows(chips)
         -- destroyDraftBoard()
-    elseif mode == modes.manual then
+    elseif mode == constants.modes.manual then
         -- Do nothing
     else
         draftBoard.setPosition({
@@ -1129,16 +655,16 @@ function startGame()
         draftBoard.interactable = false
 
         -- TODO: Implement draft mode
-        if mode == modes.draft then
+        if mode == constants.modes.draft then
             chips = getRandomChips(chip_keys, 5, staged_chips)
             displayCandidates(chips, true)
-        elseif mode == modes.manual then
-            displayCandidates(chip_obj, false)
+        elseif mode == constants.modes.manual then
+            displayCandidates(constants.chip_obj, false)
         end
     end
 
     UI.setAttribute("NewGame", "active", false)
-    local characterObject = getObjectFromGUID(character_sheet)
+    local characterObject = getObjectFromGUID(constants.character_sheet)
     if characterObject ~= nil then
         local players = Player.getPlayers()
         for _, player in pairs(players) do
@@ -1155,8 +681,8 @@ end
 function makeDeck(player)
     local playerHand = player.getPlayerHand()
     if playerHand then
-      local crash_bag = getObjectFromGUID(bags["Crash"].id)
-      local gem_bag = getObjectFromGUID(bags["1 Gem"].id)
+      local crash_bag = getObjectFromGUID(constants.bags["Crash"].id)
+      local gem_bag = getObjectFromGUID(constants.bags["1 Gem"].id)
       if crash_bag ~= nil and gem_bag ~= nil then
         crash_bag.deal(1, player.color)
         gem_bag.deal(6, player.color)
@@ -1199,7 +725,7 @@ end
 
 -- UI - Tools --
 function discardHand(player)
-    local hand = getObjectFromGUID(zones[player.color].hand)
+    local hand = getObjectFromGUID(constants.zones[player.color].hand)
     if hand ~= nil then
         local objects = {}
         for _, object in ipairs(hand.getObjects()) do
@@ -1207,7 +733,7 @@ function discardHand(player)
             if object.is_face_down ~= true then table.insert(objects, object) end
         end
 
-        local discard = getObjectFromGUID(zones[player.color].discard)
+        local discard = getObjectFromGUID(constants.zones[player.color].discard)
         if discard ~= nil then
             moveAllToDiscard({
                 discard,
@@ -1282,9 +808,9 @@ function moveAllToDiscard(params)
 end
 
 function cycleDiscard(player)
-    local discard = getObjectFromGUID(zones[player.color].discard)
+    local discard = getObjectFromGUID(constants.zones[player.color].discard)
     if discard ~= nil then
-        local deck = getObjectFromGUID(zones[player.color].deck)
+        local deck = getObjectFromGUID(constants.zones[player.color].deck)
         if deck ~= nil then
             for _, object in ipairs(discard.getObjects()) do
                 local count = getAmount(object)
@@ -1309,7 +835,7 @@ function cycleDiscard(player)
 end
 
 function shuffleDeck(player)
-    local deck = getObjectFromGUID(zones[player.color].deck)
+    local deck = getObjectFromGUID(constants.zones[player.color].deck)
     if deck ~= nil then
         local count = 5
         while 0 < count do
@@ -1320,25 +846,25 @@ function shuffleDeck(player)
 end
 
 function drawMaxHand(player)
-    local hand = getObjectFromGUID(zones[player.color].hand)
+    local hand = getObjectFromGUID(constants.zones[player.color].hand)
     if hand == nil then
         broadcastToAll("Unable to find hand for player " .. player.color .. ".")
         return
     end
 
-    local deck = getObjectFromGUID(zones[player.color].deck)
+    local deck = getObjectFromGUID(constants.zones[player.color].deck)
     if deck == nil then
         broadcastToAll("Unable to find deck for player " .. player.color .. ".")
         return
     end
 
-    local gem_pile = getObjectFromGUID(zones[player.color].pile)
+    local gem_pile = getObjectFromGUID(constants.zones[player.color].pile)
     if gem_pile == nil then
         broadcastToAll("Unable to find gem pile for player " .. player.color .. ".")
         return
     end
 
-    local pile = getObjectFromGUID(zones[player.color].deck)
+    local pile = getObjectFromGUID(constants.zones[player.color].deck)
     if pile == nil then
         broadcastToAll("Unable to find gem pile for player " .. player.color .. ".")
         return
@@ -1407,18 +933,18 @@ function MegaFreeze()
     local freezeByGUID = {
         "6b6799", -- All puzzle chips bag
         "5e08f3", -- Bottom row bank bag
-        character_sheet, -- Character sheet
+        constants.character_sheet, -- Character sheet
         "f45a6c", -- Character chip platform
         "0c2d22", -- Puzzle chip platform
     } -- Place GUIDs of individual Objects here
 
     -- Add player mats
-    for _,id in pairs(player_mats) do
+    for _,id in pairs(constants.player_mats) do
       table.insert(freezeByGUID, id)
     end
 
     -- Backgrounds for chips
-    for _, id in ipairs(placeholders) do
+    for _, id in ipairs(constants.placeholders) do
       local obj = getObjectFromGUID(id)
       obj.setLock(true)
       obj.interactable = false
