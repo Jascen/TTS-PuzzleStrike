@@ -1,6 +1,7 @@
 <Defaults>
     <Text color="#FAFAFA"/>
     <Button color="#828282"/>
+    <Button class="primary" color="#000000"/>
     <Image preserveAspect="true"/>
 
     <!-- Defining the standard appearance of the window -->
@@ -223,7 +224,10 @@
         <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+            <Text>Random</Text>
+        </Button>
+        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -283,7 +287,10 @@
         <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+            <Text>Random</Text>
+        </Button>
+        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -343,7 +350,10 @@
         <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+            <Text>Random</Text>
+        </Button>
+        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>
@@ -403,7 +413,10 @@
         <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+            <Text>Random</Text>
+        </Button>
+        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>

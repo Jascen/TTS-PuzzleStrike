@@ -303,13 +303,23 @@ function selectChar(player)
     end
 end
 
-function toggleCharacterList(player)
+function randomizeCharacter(player)
     local color = player.color
     if show[color] ~= nil then
       show[color].currentId = math.random(#character_map)
       
-      UI.setAttribute(player.color .. "_CharacterList", "active", true)
       selectCharacter(player)
+    end
+end
+
+function toggleCharacterList(player)
+    selectCharacter(player)
+
+    local opened = UI.getAttribute(player.color .. "_CharacterList", "active")
+    if opened == "True" then
+        UI.setAttribute(player.color .. "_CharacterList", "active", false)
+    else
+        UI.setAttribute(player.color .. "_CharacterList", "active", true)
     end
 end
 
