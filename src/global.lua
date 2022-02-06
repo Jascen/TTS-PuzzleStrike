@@ -16,7 +16,8 @@ labels = {
 game_settings = {
   initialized = false,
   showLabels = false,
-  rotateBank = false
+  rotateBank = true,
+  enableTools = true
 }
 
 player_data = {
@@ -75,6 +76,7 @@ player_mats = {
 }
 
 bank_zone = "d0169e"
+character_sheet = "9ec2ec"
 
 placeholders = {
     -- puzzle_bank_placeholders
@@ -535,6 +537,12 @@ chip_obj = {
 function onPlayerTurnStart(current, previous)
     if previous == nil or previous == '' then return end
 
+    local bankZone = getObjectFromGUID(bank_zone)
+    if bankZone == nil then return end
+
+    local bankObjects = bankZone.getObjects()
+    if bankObjects == nil then return end
+
     -- Build unique list of highest object count
     for _, o in pairs(getObjectFromGUID(bank_zone).getObjects()) do
         if o.getLock() ~= true and o.tag == 'Tile' then
@@ -558,13 +566,17 @@ function onPlayerTurnStart(current, previous)
         end
     end
 
-  if game_settings.rotateBank == true then
-    if current == "Purple" or current == "Red" then
-      rotateBank(180)
-    elseif current == "Green" or current == "Blue" then
-      rotateBank(0)
+  rotateBankForColor(current)
+end
+
+function rotateBankForColor(color)
+    if game_settings.rotateBank == true then
+      if color == "Purple" or color == "Red" then
+        rotateBank(180)
+      elseif color == "Green" or color == "Blue" then
+        rotateBank(0)
+      end
     end
-  end
 end
 
 function rotateBank(degree)
@@ -897,17 +909,56 @@ function onLoad(save_state)
     if save_state ~= "" then
         local loaded_data = JSON.decode(save_state)
         player_data = loaded_data.player_data
+        
+        -- TODO: Verify this works as expected
+        if loaded_data.current_player ~= nil then
+            Turns.turn_color = loaded_data.current_player
+        end
+
+        if loaded_data.game_settings ~= nil then
+            game_settings = loaded_data.game_settings
+        end
     end
 
+    applyGameSettings()
     MegaFreeze()
     updatePlayers()
+end
+
+function applyGameSettings()
+    if game_settings.initialized == true then
+      UI.setAttribute("NewGame", "active", false)
+    else
+      UI.setAttribute("NewGame", "active", true)
+    end
+
+    if game_settings.enableTools == true then
+        UI.setAttribute("ToolManager", "active", true)
+        UI.setAttribute("ShowTools", "isOn", true)
+      else
+        UI.setAttribute("ToolManager", "active", false)
+        UI.setAttribute("ShowTools", "isOn", false)
+    end
+
+    if game_settings.showLabels == true then
+        UI.setAttribute("ShowBankLabels", "isOn", true)
+      else
+        UI.setAttribute("ShowBankLabels", "isOn", false)
+    end
+
+    if game_settings.rotateBank == true then
+        UI.setAttribute("RotateBank", "isOn", true)
+        rotateBankForColor(Turns.turn_color)
+      else
+        UI.setAttribute("RotateBank", "isOn", false)
+    end
 end
 
 function onSave()
     saved_data = JSON.encode({
         player_data = player_data,
-        -- TODO: Save game settings
-        -- TODO: Save current player turn
+        game_settings = game_settings,
+        current_player = Turns.turn_color
     })
 
     -- saved_data = ""
@@ -947,14 +998,34 @@ function toggleHostOptions()
   end
 end
 
-function toggleNewGame()
-  local opened = UI.getAttribute("NewGame", "active")
+function toggleSettings()
+  local opened = UI.getAttribute("Settings", "active")
   if opened == "True" then
-      UI.setAttribute("NewGame", "active", false)
+      UI.setAttribute("Settings", "active", false)
   else
-    UI.setAttribute("NewGame", "active", true)
+      UI.setAttribute("Settings", "active", true)
   end
 end
+
+function toggleEnableTools(_, value)
+    if value == "True" then
+      game_settings.enableTools = true
+      UI.setAttribute("ToolManager", "active", true)
+    else
+      game_settings.enableTools = false
+      UI.setAttribute("ToolManager", "active", false)
+    end
+end
+
+function toggleRotateBank(_, value)
+    if value == "True" then
+      game_settings.rotateBank = true
+      rotateBankForColor(Turns.turn_color)
+    else
+      game_settings.rotateBank = false
+    end
+end
+
 -- UI - Host Options --
 
 -- UI - New Game --
@@ -977,8 +1048,8 @@ function togglePlaceholder(_, value)
     end
 end
 
-function closeNewGame()
-  UI.setAttribute("NewGame", "active", false)
+function closeSettings()
+  UI.setAttribute("Settings", "active", false)
 end
 
 function selectMode(player, option, id)
@@ -1004,7 +1075,7 @@ function setupDefaultBoard()
           setup.putObject(infinite_bag)
           clone.setPositionSmooth(o.position, false, true)
           clone.setLock(true)
-      end
+        end
       end
     end
   end
@@ -1066,9 +1137,16 @@ function startGame()
         end
     end
 
-    closeNewGame()
+    UI.setAttribute("NewGame", "active", false)
+    local characterObject = getObjectFromGUID(character_sheet)
+    if characterObject ~= nil then
+        local players = Player.getPlayers()
+        for _, player in pairs(players) do
+            characterObject.call('toggleCharacterList', player)
+        end
+    end
+    
     Turns.enable = true
-    -- TODO: Show/enable the player select cards
 end
 -- UI - New Game --
 
@@ -1329,7 +1407,7 @@ function MegaFreeze()
     local freezeByGUID = {
         "6b6799", -- All puzzle chips bag
         "5e08f3", -- Bottom row bank bag
-        "9ec2ec", -- Character sheet
+        character_sheet, -- Character sheet
         "f45a6c", -- Character chip platform
         "0c2d22", -- Puzzle chip platform
     } -- Place GUIDs of individual Objects here

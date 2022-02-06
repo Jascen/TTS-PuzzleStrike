@@ -107,32 +107,44 @@
 
     <Panel id="HostOptions_content" offsetXY="0 -15">
         <Panel width="100">
-            <Button onClick="toggleNewGame" text="New Game" height="30" />
+            <Button onClick="toggleSettings" text="Settings" height="30" />
         </Panel>
     </Panel>
 </Panel>
 <!-- Host Options Window -->
 
-<!-- Game Mode Window -->
-<Panel id="NewGame" class="Window" width="300" height="180" visibility="host" active="false" rectAlignment="MiddleCenter" color="#69696940">
+<!-- New Game Window -->
+<Panel id="NewGame" class="Window" width="300" height="130" visibility="host" active="false" rectAlignment="MiddleCenter" color="#69696940">
     <Panel class="TopBar" width="300" color="rgba(0,0,0,1)" />
     <Text class="WindowTitle" fontSize="18" height="20" offsetXY="0 -5" rectAlignment="UpperCenter" color="#FFFFFF">New Game</Text>
-    <Button class="closeButton" onClick="closeNewGame" offsetXY="-5 -5"/>
 
     <Panel color="rgba(0,0,0,1)" offsetXY="0 -25">
-        <Text text="Bank Selection" offsetXY="-90 50" />
-        <Dropdown onValueChanged="selectMode" offsetXY="50 50">
+        <Text text="Bank Selection" offsetXY="-90 30" />
+        <Dropdown onValueChanged="selectMode" offsetXY="50 30">
             <Option>Random</Option>
             <Option>Manual</Option>
             <Option>First Game</Option>
         </Dropdown>
-        <Toggle onValueChanged="togglePlaceholder" offsetXY="15 10" text=" Add placeholder text for puzzle chips" width="300" textColor="#FFFFFF"></Toggle>
-        <Panel width="180">
-            <Button onClick="startGame" text="Start Game" height="50" offsetXY="0 -50" />
+        <Panel width="180" offsetXY="0 -30">
+            <Button onClick="startGame" text="Start Game" height="50"/>
         </Panel>
     </Panel>
 </Panel>
-<!-- Game Mode Window -->
+<!-- New Game Window -->
+
+<!-- Settings Window -->
+<Panel id="Settings" class="Window" width="300" height="130" visibility="host" active="false" rectAlignment="MiddleCenter" color="#69696940">
+    <Panel class="TopBar" width="300" color="rgba(0,0,0,1)" />
+    <Text class="WindowTitle" fontSize="18" height="20" offsetXY="0 -5" rectAlignment="UpperCenter" color="#FFFFFF">Settings</Text>
+    <Button class="closeButton" onClick="closeSettings" offsetXY="-5 -5"/>
+
+    <Panel color="rgba(0,0,0,1)" offsetXY="0 -25">
+        <Toggle onValueChanged="togglePlaceholder" offsetXY="15 30" text=" Show bank placeholder text" width="300" textColor="#FFFFFF"></Toggle>
+        <Toggle onValueChanged="toggleRotateBank" offsetXY="15 5" text=" Rotate bank to face active player" width="300" textColor="#FFFFFF"></Toggle>
+        <Toggle onValueChanged="toggleEnableTools" offsetXY="15 -20" text=" Show player Tools" width="300" textColor="#FFFFFF"></Toggle>
+    </Panel>
+</Panel>
+<!-- Settings Window -->
 
 <!-- Tool Manager Window -->
 <Panel id="ToolManager" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
