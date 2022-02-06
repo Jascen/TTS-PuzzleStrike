@@ -47,22 +47,31 @@ player_data = {
 }
 
 show = {
+    Purple = {
+        currentId = 1
+    },
+    Red = {
+        currentId = 1
+    },
+    Green = {
+        currentId = 1
+    },
+    Blue = {
+        currentId = 1
+    },
+
     Scoreboard = {
         Purple = {
-            visible = true,
-            currentId = 1
+            visible = true
         },
         Red = {
-            visible = true,
-            currentId = 1
+            visible = true
         },
         Green = {
-            visible = true,
-            currentId = 1
+            visible = true
         },
         Blue = {
-            visible = true,
-            currentId = 1
+            visible = true
         }
     }
 }
