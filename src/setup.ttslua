@@ -1,0 +1,161 @@
+setup = {}
+
+--- Initiates the process to build a bank for the provided mode
+-- mode - The bank building mode
+function setup.startGame()
+    if game_settings.initialized == true then return end
+  
+    game_settings.initialized = true
+  
+    draftBoard = getObjectFromGUID(draftBoard_id)
+    chip_keys = utility.extractKeysFromTable(constants.chip_obj)
+  
+    setup.setupDefaultBoard()
+  
+      local chips = nil
+      if mode == constants.modes.random then
+          -- TODO: Promote?
+          -- TODO: Place stage?
+          chips = setup.getRandomChips(chip_keys, 10, {})
+          setup.buildBank_ChipRows(chips)
+          -- destroyDraftBoard()
+      elseif mode == constants.modes.beginner then
+          -- TODO: Promote?
+          -- TODO: Place stage?
+  
+          chips = {}
+          chips["combos_are_hard"] = constants.chip_obj["combos_are_hard"]
+          chips["draw_three"] = constants.chip_obj["draw_three"]
+          chips["gem_essence"] = constants.chip_obj["gem_essence"]
+          chips["knockdown"] = constants.chip_obj["knockdown"]
+          chips["one_of_each"] = constants.chip_obj["one_of_each"]
+          chips["one_two_punch"] = constants.chip_obj["one_two_punch"]
+          chips["risky_move"] = constants.chip_obj["risky_move"]
+          chips["sale_prices"] = constants.chip_obj["sale_prices"]
+          chips["self_improvement"] = constants.chip_obj["self_improvement"]
+          chips["sneak_attack"] = constants.chip_obj["sneak_attack"]
+          setup.buildBank_ChipRows(chips)
+          -- destroyDraftBoard()
+      elseif mode == constants.modes.manual then
+          -- Do nothing
+      else
+          draftBoard.setPosition({
+              0,
+              1.01,
+              0
+          })
+          draftBoard.lock()
+          draftBoard.interactable = false
+  
+          -- TODO: Implement draft mode
+          if mode == constants.modes.draft then
+              chips = setup.getRandomChips(chip_keys, 5, staged_chips)
+              displayCandidates(chips, true)
+          elseif mode == constants.modes.manual then
+              displayCandidates(constants.chip_obj, false)
+          end
+      end
+  
+      UI.setAttribute("NewGame", "active", false)
+      local characterObject = getObjectFromGUID(constants.character_sheet)
+      if characterObject ~= nil then
+          local players = Player.getPlayers()
+          for _, player in pairs(players) do
+              characterObject.call('toggleCharacterList', player)
+          end
+      end
+      
+      Turns.enable = true
+end
+
+function setup.buildBank_ChipRows(collection)
+    local sorted = {}
+    local item_count = 0
+    for _, chip in pairs(collection) do
+        item_count = item_count + 1
+        sorted[item_count] = chip
+    end
+    table.sort(sorted, utility.sortFunction)
+
+    local item_width = 2.5
+    local left_pad = 2.5
+    local item_offset_x = item_width * item_count
+    local pad_offset_x = left_pad * (item_count - 1) -- No left pad for the first item
+    local item_offset_z = -2.5
+
+    local start = {
+        x = 1.25 - (item_offset_x + pad_offset_x) / 2, -- Offset by half
+        y = 2.5,
+        z = 0 - item_offset_z
+    }
+
+    local column = 0
+    for _, chip in pairs(sorted) do
+        local position = {
+            start.x + (item_width * column) + (left_pad * column),
+            start.y,
+            start.z
+        }
+
+        -- Create a stack for the bank
+        for i = 1, 5 do setup.getChip(chip.key).setPosition(position) end
+
+        current_bank[chip.name] = {
+            position = position
+        }
+
+        column = column + 1
+    end
+end
+
+function setup.getChip(chip_id)
+    local clone = getObjectFromGUID(constants.chip_obj[chip_id].id).clone()
+    clone.setCustomObject({
+        stackable = true
+    })
+    clone.locked = false
+
+    return clone
+end
+
+-- key_src - A table of keys to draw from
+-- count - The amount of keys to return
+-- excluded_keys - A table of keys to skip over
+-- RETURNS -- A list of keys
+function setup.getRandomChips(key_src, count, excluded_keys)
+    if (key_src[1] == nil) then
+        print('The chip source has no keys.')
+        return {}
+    end
+
+    local i = 0
+    local selectedKeys = {}
+    while i < count do
+        local index = key_src[math.random(1, #key_src)]
+        if not utility.setContains(selectedKeys, index) then
+            if not utility.setContains(excluded_keys, index) then
+                utility.addToSet(selectedKeys, index, constants.chip_obj[index])
+                i = i + 1
+            end
+        end
+    end
+
+    return selectedKeys
+end
+
+function setup.setupDefaultBoard()
+    local setup = getObjectFromGUID("5e08f3")
+    if setup ~= nil then
+      for _, o in pairs(constants.bags) do
+        local infinite_bag = setup.takeObject({guid = o.infinite})
+        if infinite_bag ~= nil then
+          local clone = infinite_bag.takeObject()
+          if clone ~= nil then
+            setup.putObject(infinite_bag)
+            clone.setPositionSmooth(o.position, false, true)
+            clone.setLock(true)
+          end
+        end
+      end
+    end
+  end

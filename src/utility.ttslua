@@ -1,0 +1,37 @@
+utility = {}
+
+-- src - A table
+-- RETURNS -- The original table's keys in a new table
+function utility.extractKeysFromTable(src)
+    local keys = {}
+    for key, value in pairs(src) do
+        keys[#keys + 1] = key -- Store keys in another table
+    end
+
+    return keys
+end
+
+--- Sorts the provided chips by cost and then by key (= name)
+function utility.sortFunction(a, b)
+    return a.cost < b.cost or a.cost == b.cost and a.key < b.key
+end
+
+-- src - A table
+-- key - The key to add
+-- value - The value associated with the key
+function utility.addToSet(src, key, value)
+    src[key] = value
+end
+
+-- src - A table
+-- key - The key to remove
+function utility.removeFromSet(src, key)
+    src[key] = nil
+end
+
+-- src - A table
+-- key - The key to check for
+-- RETURNS -- Whether or not a table has a value set for the given key
+function utility.setContains(set, key)
+    return set[key] ~= nil
+end

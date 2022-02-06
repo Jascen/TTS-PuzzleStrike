@@ -1,0 +1,201 @@
+function discardHand(player)
+    local hand = getObjectFromGUID(constants.zones[player.color].hand)
+    if hand ~= nil then
+        local objects = {}
+        for _, object in ipairs(hand.getObjects()) do
+            -- If it's face down, don't discard it. They chose to piggy bank it.
+            if object.is_face_down ~= true then table.insert(objects, object) end
+        end
+
+        local discard = getObjectFromGUID(constants.zones[player.color].discard)
+        if discard ~= nil then
+            moveAllToDiscard({
+                discard,
+                objects
+            })
+        end
+    end
+end
+
+function moveAllToDiscard(params)
+    local discard = params[1]
+    local objects = params[2]
+    if discard ~= nil then
+        local destination = discard.getPosition()
+
+        destination.x = destination.x - 1.25 * 3
+        destination.z = destination.z - 1.25 * 3
+
+        for _, object in ipairs(discard.getObjects()) do destination.y = math.max(destination.y, object.getPosition().y) end
+
+        local row = 1
+        local column = 1
+        local index = 1
+        for _, object in ipairs(objects) do
+            local count = getAmount(object)
+
+            if 1 < count then
+                local id = object.getGUID()
+                for i = 1, count do
+                    local x_offset = row * 2
+                    local z_offset = column * 2
+                    local o = object.takeObject()
+                    Wait.condition(function()
+                        o.setPosition({
+                            x = destination.x + x_offset,
+                            y = destination.y + 3,
+                            z = destination.z + z_offset
+                        }, false, true)
+                    end, function()
+                        return o.spawning ~= true
+                    end)
+
+                    index = index + 1
+                    column = column + 1
+                    if 3 < column then
+                        column = 1
+                        row = row + 1
+
+                        if 3 < row then row = 1 end
+                    end
+                end
+            else
+
+                local x_offset = row * 2
+                local z_offset = column * 2
+                object.setPosition({
+                    x = destination.x + x_offset,
+                    y = destination.y + 3,
+                    z = destination.z + z_offset
+                }, false, true)
+
+                column = column + 1
+                if 3 < column then
+                    column = 1
+                    row = row + 1
+
+                    if 3 < row then row = 1 end
+                end
+            end
+        end
+    end
+end
+
+function cycleDiscard(player)
+    local discard = getObjectFromGUID(constants.zones[player.color].discard)
+    if discard ~= nil then
+        local deck = getObjectFromGUID(constants.zones[player.color].deck)
+        if deck ~= nil then
+            for _, object in ipairs(discard.getObjects()) do
+                local count = getAmount(object)
+                if 1 < count then
+                    local id = object.getGUID()
+                    for i = 1, count do
+                        local o = object.takeObject()
+                        Wait.condition(function()
+                            deck.putObject(o)
+                            deck.shuffle()
+                        end, function()
+                            return o.spawning ~= true
+                        end)
+                    end
+                else
+                    deck.putObject(object)
+                    deck.shuffle()
+                end
+            end
+        end
+    end
+end
+
+function shuffleDeck(player)
+    local deck = getObjectFromGUID(constants.zones[player.color].deck)
+    if deck ~= nil then
+        local count = 5
+        while 0 < count do
+            deck.shuffle()
+            count = count - 1
+        end
+    end
+end
+
+function drawMaxHand(player)
+    local hand = getObjectFromGUID(constants.zones[player.color].hand)
+    if hand == nil then
+        broadcastToAll("Unable to find hand for player " .. player.color .. ".")
+        return
+    end
+
+    local deck = getObjectFromGUID(constants.zones[player.color].deck)
+    if deck == nil then
+        broadcastToAll("Unable to find deck for player " .. player.color .. ".")
+        return
+    end
+
+    local gem_pile = getObjectFromGUID(constants.zones[player.color].pile)
+    if gem_pile == nil then
+        broadcastToAll("Unable to find gem pile for player " .. player.color .. ".")
+        return
+    end
+
+    local pile = getObjectFromGUID(constants.zones[player.color].deck)
+    if pile == nil then
+        broadcastToAll("Unable to find gem pile for player " .. player.color .. ".")
+        return
+    end
+
+    -- Get gem count
+    local count = countGems(gem_pile)
+    local max_hand = 5
+    if 9 < count then
+        broadcastToAll(player.steam_name .. " tried to draw when their pile is >= 10.")
+        return
+    elseif 8 < count then
+        max_hand = 8
+    elseif 5 < count then
+        max_hand = 7
+    elseif 2 < count then
+        max_hand = 6
+    else
+        max_hand = 5
+    end
+
+    -- Get hand
+    if hand ~= nil then
+        local hand_count = 0
+        local flipped = 0
+        for _, object in ipairs(hand.getObjects()) do
+            if object.is_face_down then flipped = flipped + 1 end
+
+            hand_count = hand_count + 1
+        end
+
+        local draws = max_hand - hand_count
+        if 0 < draws then
+            local deck_size = getAmount(deck)
+            local draws_missed = draws - deck_size
+            if 0 < draws_missed then
+                local draws = draws - draws_missed
+                deck.deal(draws, player.color)
+                broadcastToColor("The deck ran out of cards. Shuffling your discard pile into your deck.", player.color)
+                cycleDiscard(player)
+            else
+                deck.deal(draws, player.color)
+            end
+
+            if 0 < flipped then broadcastToAll(player.steam_name .. " piggy banked " .. flipped .. " cards.") end
+        else
+            broadcastToColor("You are already at your maximum hand size.", player.color)
+        end
+    end
+end
+
+function showMoney(player)
+    if Turns.turn_color == player.color then
+        local hand_zone = getObjectFromGUID(constants.zones[player.color].hand)
+        local count = countGems(hand_zone)
+        broadcastToAll(player.steam_name .. " has $" .. count .. " in their hand.")
+    else
+        broadcastToColor("You can only announce your $ on your turn.", player.color)
+    end
+end

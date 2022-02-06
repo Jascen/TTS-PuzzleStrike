@@ -1,5 +1,4 @@
 <Include src="windows/theme.xml"/>
-<Include src="windows/host-options.xml"/>
 <Include src="windows/character-list/blue.xml"/>
 <Include src="windows/character-list/green.xml"/>
 <Include src="windows/character-list/purple.xml"/>
@@ -8,7 +7,8 @@
 <Include src="windows/discard/green.xml"/>
 <Include src="windows/discard/purple.xml"/>
 <Include src="windows/discard/red.xml"/>
-<Include src="windows/new-game.xml"/>
-<Include src="windows/scoreboard.xml"/>
-<Include src="windows/settings.xml"/>
-<Include src="windows/tool-manager.xml"/>
+<Include src="windows/host/host.xml"/>
+<Include src="windows/new-game/new-game.xml"/>
+<Include src="windows/scoreboard/scoreboard.xml"/>
+<Include src="windows/settings/settings.xml"/>
+<Include src="windows/tools/tools.xml"/>

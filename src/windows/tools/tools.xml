@@ -1,8 +1,8 @@
-<Panel id="ToolManager" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
+<Panel id="Tools" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
     <Panel class="TopBar" width="110"/>
     <Text class="WindowTitle">Tools</Text>
 
-    <Panel id="ToolManager_content" width="90" offsetXY="0 75">
+    <Panel id="Tools_content" width="90" offsetXY="0 75">
 
         <Button onClick="drawMaxHand" height="50" tooltipPosition="Left" tooltip="Draw to your max hand size">
             <Image image="clone" preserveAspect="1" width="15" offsetXY="-30 0"/>

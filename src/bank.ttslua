@@ -1,0 +1,44 @@
+bank = {}
+
+function bank.rotateBank(degree)
+
+    -- Text labels
+    local z = -1
+    if degree == 180 then z = 1 end
+
+    local i = 0
+    for _, label in pairs(constants.labels) do
+        local o = getObjectFromGUID(label)
+        o.setPosition({
+            x = -22.25 + (5 * i),
+            y = 2,
+            z = z
+        })
+        local rotation = o.getRotation()
+        o.setRotation({
+            rotation[1],
+            degree + 180,
+            rotation[3]
+        })
+        i = i + 1
+    end
+
+    for _, o in pairs(getObjectFromGUID(constants.bank_zone).getObjects()) do
+        local rotation = o.getRotation()
+        o.setRotation({
+            rotation[1],
+            degree,
+            rotation[3]
+        })
+    end
+end
+
+function bank.rotateBankForColor(color)
+    if game_settings.rotateBank == true then
+      if color == "Purple" or color == "Red" then
+        bank.rotateBank(180)
+      elseif color == "Green" or color == "Blue" then
+        bank.rotateBank(0)
+      end
+    end
+end
