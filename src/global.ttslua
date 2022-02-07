@@ -1,4 +1,5 @@
 require("constants")
+require("constants-characters")
 require("setup")
 require("bank")
 require("utility")
@@ -44,36 +45,6 @@ player_data = {
         discard = 0,
         bag = 0,
         ongoing = 0
-    }
-}
-
-show = {
-    Purple = {
-        currentId = 1
-    },
-    Red = {
-        currentId = 1
-    },
-    Green = {
-        currentId = 1
-    },
-    Blue = {
-        currentId = 1
-    },
-
-    Scoreboard = {
-        Purple = {
-            visible = true
-        },
-        Red = {
-            visible = true
-        },
-        Green = {
-            visible = true
-        },
-        Blue = {
-            visible = true
-        }
     }
 }
 
@@ -155,6 +126,7 @@ function onLoad(save_state)
     applyGameSettings()
     MegaFreeze()
     updatePlayers()
+    windows.initialize()
 end
 
 function applyGameSettings()

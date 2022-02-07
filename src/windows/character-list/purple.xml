@@ -1,11 +1,11 @@
 <Panel id="Purple_CharacterList" visibility="Purple" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Select A Character</Text>
-    <Button class="closeButton" onClick="9ec2ec/closeCharacterSelection"/>
+    <Button class="closeButton" onClick="closeCharacterSelection"/>
 
     <Panel offsetXY="160 250">
         <Text offsetXY="20 0">Quick Select</Text>
-        <Dropdown onValueChanged="9ec2ec/optionSelected" offsetXY="150 0">
+        <Dropdown onValueChanged="optionSelected" offsetXY="150 0">
             <Option>- None -</Option>
             <Option>Argagarg Garg</Option>
             <Option>Bal-Bas-Beta</Option>
@@ -46,16 +46,16 @@
     </Panel>
 
     <Panel height="30" offsetXY="-325 -260">
-        <Button onClick="9ec2ec/prevChar" height="30" width="100">
+        <Button onClick="prevChar" height="30" width="100">
             <Text>Previous</Text>
         </Button>
-        <Button onClick="9ec2ec/nextChar" height="30" width="100" offsetXY="110 0">
+        <Button onClick="nextChar" height="30" width="100" offsetXY="110 0">
             <Text>Next</Text>
         </Button>
-        <Button onClick="9ec2ec/randomizeCharacter" height="30" width="100" offsetXY="525 0">
+        <Button onClick="randomizeCharacter" height="30" width="100" offsetXY="525 0">
             <Text>Random</Text>
         </Button>
-        <Button class="primary" onClick="9ec2ec/selectChar" height="30" width="100" offsetXY="650 0">
+        <Button class="primary" onClick="selectChar" height="30" width="100" offsetXY="650 0">
             <Text>Select</Text>
         </Button>
     </Panel>

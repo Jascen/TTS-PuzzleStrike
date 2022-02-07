@@ -1,5 +1,45 @@
 -- This file exists to house all pass-through functions
 
+require("windows/character-list/_character-list")
+
+windows = {}
+function windows.initialize()
+    characterList.buildMap()
+end
+
+-- TODO: Switch to "windows." and move these things into respective files
+show = {
+    CharacterList = {
+        Purple = {
+            currentId = 1
+        },
+        Red = {
+            currentId = 1
+        },
+        Green = {
+            currentId = 1
+        },
+        Blue = {
+            currentId = 1
+        }
+    },
+
+    Scoreboard = {
+        Purple = {
+            visible = true
+        },
+        Red = {
+            visible = true
+        },
+        Green = {
+            visible = true
+        },
+        Blue = {
+            visible = true
+        }
+    }
+}
+
 function startGame()
     setup.startGame()
 end
@@ -78,4 +118,37 @@ function toggleEnableTools(_, value)
       game_settings.enableTools = false
       UI.setAttribute("Tools", "active", false)
     end
+end
+
+
+function nextChar(player)
+    characterList.nextChar(player)
+end
+
+function prevChar(player)
+    characterList.prevChar(player)
+end
+
+function optionSelected(player, name)
+    characterList.optionSelected(player, name)
+end
+
+function inspectCharacter(player, character, name)
+    characterList.inspectCharacter(player, character, name)
+end
+
+function selectChar(player)
+    characterList.selectChar(player)
+end
+
+function randomizeCharacter(player)
+    characterList.randomizeCharacter(player)
+end
+
+function selectCharacter(player)
+    characterList.selectCharacter(player)
+end
+
+function closeCharacterSelection(player)
+    characterList.closeWindow(player)
 end
