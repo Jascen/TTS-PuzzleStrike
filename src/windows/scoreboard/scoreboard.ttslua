@@ -12,7 +12,7 @@ function scoreboard.refreshDeckOnContainerChange(container)
         for key, id in pairs(o) do
             if container_id == id then
                 if key == "deck" then
-                    local count = countObjectsInContainer(container)
+                    local count = scoreboard.countObjectsInContainer(container)
                     player_data[color].bag = count
                     scoreboard.updateDeckSize(color)
                 end
@@ -29,22 +29,22 @@ function scoreboard.refreshCountsOnZoneChange(zone, object)
                 if key == "pile" then -- Count gem pile
                     local name = object.getName()
                     if name:match("%d Gem") then
-                        local count = countGems(zone)
+                        local count = utility.countGems(zone)
                         scoreboard.updateRow(color, count)
                     end
 
                     return
                 elseif key == "discard" then -- Count discard
-                    local count = countObjects(zone)
+                    local count = scoreboard.countObjects(zone)
                     player_data[color].discard = count
                     scoreboard.updateDeckSize(color)
                 elseif key == "hand" then -- Count hand
-                    local count = countObjects(zone)
+                    local count = scoreboard.countObjects(zone)
                     player_data[color].hand = count
                     UI.setAttribute(color .. "_hand", "text", count)
                     scoreboard.updateDeckSize(color)
                 elseif key == "ongoing" then -- Count ongoing
-                    local count = countObjects(zone)
+                    local count = scoreboard.countObjects(zone)
                     player_data[color].ongoing = count
                     scoreboard.updateDeckSize(color)
                 end
@@ -66,4 +66,26 @@ function scoreboard.updateRow(color, count)
     else
         UI.setAttribute(color, "color", "rgba(0, 0, 0, 0)")
     end
+end
+
+function scoreboard.countObjectsInContainer(container)
+    local count = 0
+    if container ~= nil then for _, object in ipairs(container.getObjects()) do count = count + 1 end end
+
+    return count
+end
+
+function scoreboard.countObjects(zone)
+    local count = 0
+    if zone ~= nil then 
+      for _, object in ipairs(zone.getObjects()) do 
+        local id = object.getGUID()
+        -- Never count the player mat as an object
+        if utility.isPlayerMat(id) ~= true then
+          count = count + utility.getAmount(object) 
+        end
+      end
+    end
+
+    return count
 end

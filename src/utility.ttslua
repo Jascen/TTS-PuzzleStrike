@@ -35,3 +35,32 @@ end
 function utility.setContains(set, key)
     return set[key] ~= nil
 end
+
+function utility.isPlayerMat(id)
+    for i=1,#constants.player_mats do
+       if constants.player_mats[i] == id then 
+          return true
+       end
+    end
+    return false
+end
+
+function utility.countGems(zone)
+    local count = 0
+    if zone ~= nil then for _, object in ipairs(zone.getObjects()) do count = count + utility.countGem(object) end end
+
+    return count
+end
+
+function utility.getAmount(object)
+    local amount = object.getQuantity()
+    if amount < 1 then return 1 end
+    return amount
+end
+
+function utility.countGem(object)
+    local name = object.getName()
+    if name:match("%d Gem") then return utility.getAmount(object) * string.match(name, "%d") end
+
+    return 0
+end

@@ -32,7 +32,7 @@ function moveAllToDiscard(params)
         local column = 1
         local index = 1
         for _, object in ipairs(objects) do
-            local count = getAmount(object)
+            local count = utility.getAmount(object)
 
             if 1 < count then
                 local id = object.getGUID()
@@ -87,7 +87,7 @@ function cycleDiscard(player)
         local deck = getObjectFromGUID(constants.zones[player.color].deck)
         if deck ~= nil then
             for _, object in ipairs(discard.getObjects()) do
-                local count = getAmount(object)
+                local count = utility.getAmount(object)
                 if 1 < count then
                     local id = object.getGUID()
                     for i = 1, count do
@@ -145,7 +145,7 @@ function drawMaxHand(player)
     end
 
     -- Get gem count
-    local count = countGems(gem_pile)
+    local count = utility.countGems(gem_pile)
     local max_hand = 5
     if 9 < count then
         broadcastToAll(player.steam_name .. " tried to draw when their pile is >= 10.")
@@ -172,7 +172,7 @@ function drawMaxHand(player)
 
         local draws = max_hand - hand_count
         if 0 < draws then
-            local deck_size = getAmount(deck)
+            local deck_size = utility.getAmount(deck)
             local draws_missed = draws - deck_size
             if 0 < draws_missed then
                 local draws = draws - draws_missed
@@ -193,7 +193,7 @@ end
 function showMoney(player)
     if Turns.turn_color == player.color then
         local hand_zone = getObjectFromGUID(constants.zones[player.color].hand)
-        local count = countGems(hand_zone)
+        local count = utility.countGems(hand_zone)
         broadcastToAll(player.steam_name .. " has $" .. count .. " in their hand.")
     else
         broadcastToColor("You can only announce your $ on your turn.", player.color)

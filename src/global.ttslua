@@ -137,59 +137,6 @@ function onObjectLeaveScriptingZone(zone, object)
     scoreboard.refreshCountsOnZoneChange(zone, object)
 end
 
-function countObjectsInContainer(container)
-    local count = 0
-    if container ~= nil then for _, object in ipairs(container.getObjects()) do count = count + 1 end end
-
-    return count
-end
-
-function countObjects(zone)
-    local count = 0
-    if zone ~= nil then 
-      for _, object in ipairs(zone.getObjects()) do 
-        local id = object.getGUID()
-        -- Never count the player mat as an object
-        if isPlayerMat(id) ~= true then
-          count = count + getAmount(object) 
-        end
-      end
-    end
-
-    return count
-end
-
-function isPlayerMat(id)
-  for i=1,#constants.player_mats do
-     if constants.player_mats[i] == id then 
-        return true
-     end
-  end
-  return false
-end
-
-function countGems(zone)
-    local count = 0
-    if zone ~= nil then for _, object in ipairs(zone.getObjects()) do count = count + countGem(object) end end
-
-    return count
-end
-
-function getAmount(object)
-    local amount = object.getQuantity()
-    if amount < 1 then return 1 end
-    return amount
-end
-
-function countGem(object)
-    local name = object.getName()
-    if name:match("%d Gem") then return getAmount(object) * string.match(name, "%d") end
-
-    return 0
-end
-
------ ?????
-
 function onLoad(save_state)
     if save_state ~= "" then
         local loaded_data = JSON.decode(save_state)
