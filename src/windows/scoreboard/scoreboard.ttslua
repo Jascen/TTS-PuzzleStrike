@@ -1,7 +1,38 @@
 scoreboard = {}
 
+scoreboard.Rows = {
+    Purple = {
+        pile = 0,
+        hand = 0,
+        discard = 0,
+        bag = 0,
+        ongoing = 0
+    },
+    Red = {
+        pile = 0,
+        hand = 0,
+        discard = 0,
+        bag = 0,
+        ongoing = 0
+    },
+    Green = {
+        pile = 0,
+        hand = 0,
+        discard = 0,
+        bag = 0,
+        ongoing = 0
+    },
+    Blue = {
+        pile = 0,
+        hand = 0,
+        discard = 0,
+        bag = 0,
+        ongoing = 0
+    }
+}
+
 function scoreboard.updateDeckSize(color)
-    local o = player_data[color]
+    local o = scoreboard.Rows[color]
     local count = o.hand + o.discard + o.bag + o.ongoing
     UI.setAttribute(color .. "_deck", "text", count)
 end
@@ -13,7 +44,7 @@ function scoreboard.refreshDeckOnContainerChange(container)
             if container_id == id then
                 if key == "deck" then
                     local count = scoreboard.countObjectsInContainer(container)
-                    player_data[color].bag = count
+                    scoreboard.Rows[color].bag = count
                     scoreboard.updateDeckSize(color)
                 end
             end
@@ -36,16 +67,16 @@ function scoreboard.refreshCountsOnZoneChange(zone, object)
                     return
                 elseif key == "discard" then -- Count discard
                     local count = scoreboard.countObjects(zone)
-                    player_data[color].discard = count
+                    scoreboard.Rows[color].discard = count
                     scoreboard.updateDeckSize(color)
                 elseif key == "hand" then -- Count hand
                     local count = scoreboard.countObjects(zone)
-                    player_data[color].hand = count
+                    scoreboard.Rows[color].hand = count
                     UI.setAttribute(color .. "_hand", "text", count)
                     scoreboard.updateDeckSize(color)
                 elseif key == "ongoing" then -- Count ongoing
                     local count = scoreboard.countObjects(zone)
-                    player_data[color].ongoing = count
+                    scoreboard.Rows[color].ongoing = count
                     scoreboard.updateDeckSize(color)
                 end
             end

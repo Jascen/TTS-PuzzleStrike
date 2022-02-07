@@ -1,8 +1,6 @@
 require("shared/_module")
 require("windows/_module")
 
-current_bank = {}
-
 game_settings = {
   initialized = false,
   showLabels = false,
@@ -10,53 +8,26 @@ game_settings = {
   enableTools = true
 }
 
-player_data = {
-    Purple = {
-        pile = 0,
-        hand = 0,
-        discard = 0,
-        bag = 0,
-        ongoing = 0
-    },
-    Red = {
-        pile = 0,
-        hand = 0,
-        discard = 0,
-        bag = 0,
-        ongoing = 0
-    },
-    Green = {
-        pile = 0,
-        hand = 0,
-        discard = 0,
-        bag = 0,
-        ongoing = 0
-    },
-    Blue = {
-        pile = 0,
-        hand = 0,
-        discard = 0,
-        bag = 0,
-        ongoing = 0
-    }
-}
-
 function onSave()
     saved_data = JSON.encode({
-        player_data = player_data,
+        scoreboardRows = scoreboard.Rows,
         game_settings = game_settings,
         current_player = Turns.turn_color
     })
 
+    -- TODO: Do we need to save "bank.current" for any reason?
+
     -- saved_data = "" -- Clear the saved data
-    
+
     return saved_data
 end
 
 function onLoad(save_state)
     if save_state ~= "" then
         local loaded_data = JSON.decode(save_state)
-        player_data = loaded_data.player_data
+        if loaded_data.scoreboardRows ~= nil then
+            scoreboard.Rows = loaded_data.scoreboardRows
+        end
         
         -- TODO: Verify this works as expected
         if loaded_data.current_player ~= nil then

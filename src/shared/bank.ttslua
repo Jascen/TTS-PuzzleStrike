@@ -1,5 +1,7 @@
 bank = {}
 
+bank.current = {}
+
 function bank.rotateBank(degree)
 
     -- Text labels
@@ -55,7 +57,7 @@ function bank.restack()
         if o.getLock() ~= true and o.tag == 'Tile' then
             local name = o.getName()
             if name ~= nil and name ~= "" then
-                local bank_object = current_bank[name]
+                local bank_object = bank.current[name]
                 if bank_object ~= nil then
                     local p = bank_object.position
                     o.setPositionSmooth({

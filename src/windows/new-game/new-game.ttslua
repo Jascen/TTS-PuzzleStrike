@@ -114,7 +114,7 @@ function newGame.buildBank_ChipRows(collection)
         -- Create a stack for the bank
         for i = 1, 5 do newGame.getChip(chip.key).setPosition(position) end
 
-        current_bank[chip.name] = {
+        bank.current[chip.name] = {
             position = position
         }
 
