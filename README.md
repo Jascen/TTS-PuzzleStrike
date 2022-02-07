@@ -1,5 +1,5 @@
 # Puzzle Strike Workshop for Tabletop Simulator
-- (Puzzle Strike Board Game)[https://sirlingames.com/puzzlestrike]
+- [Puzzle Strike Board Game](https://sirlingames.com/puzzlestrike)
 
 # Development Environment
 - [VSCode](https://code.visualstudio.com/download)
