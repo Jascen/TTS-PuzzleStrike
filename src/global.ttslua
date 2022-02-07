@@ -5,6 +5,7 @@ require("utility")
 require("windows/_bindings")
 require("windows/_utility")
 require("windows/tools/tools")
+require("windows/scoreboard/scoreboard")
 
 current_bank = {}
 
@@ -114,25 +115,8 @@ end
 
 -------- Table Value Tracking
 
-function updateDeckSize(color)
-    local o = player_data[color]
-    local count = o.hand + o.discard + o.bag + o.ongoing
-    UI.setAttribute(color .. "_deck", "text", count)
-end
-
 function onObjectEnterContainer(container, object)
-    local container_id = container.getGUID()
-    for color, o in pairs(constants.zones) do
-        for key, id in pairs(o) do
-            if container_id == id then
-                if key == "deck" then
-                    local count = countObjectsInContainer(container)
-                    player_data[color].bag = count
-                    updateDeckSize(color)
-                end
-            end
-        end
-    end
+    scoreboard.refreshDeckOnContainerChange(container)
 end
 
 function onObjectLeaveContainer(container, object)
@@ -142,97 +126,15 @@ function onObjectLeaveContainer(container, object)
         })
     end
 
-    local container_id = container.getGUID()
-    for color, o in pairs(constants.zones) do
-        for key, id in pairs(o) do
-            if container_id == id then
-                if key == "deck" then
-                    local count = countObjectsInContainer(container)
-                    player_data[color].bag = count
-                    updateDeckSize(color)
-                end
-            end
-        end
-    end
+    scoreboard.refreshDeckOnContainerChange(container)
 end
 
 function onObjectEnterScriptingZone(zone, object)
-    local zone_id = zone.getGUID()
-    for color, o in pairs(constants.zones) do
-        for key, id in pairs(o) do
-            if zone_id == id then
-                if key == "pile" then -- Count gem pile
-                    local name = object.getName()
-                    if name:match("%d Gem") then
-                        local count = countGems(zone)
-                        updateRow(color, count)
-                    end
-
-                    return
-                elseif key == "discard" then -- Count discard
-                    local count = countObjects(zone)
-                    player_data[color].discard = count
-                    updateDeckSize(color)
-                elseif key == "hand" then -- Count hand
-                    local count = countObjects(zone)
-                    player_data[color].hand = count
-                    UI.setAttribute(color .. "_hand", "text", count)
-                    updateDeckSize(color)
-                elseif key == "ongoing" then -- Count ongoing
-                    local count = countObjects(zone)
-                    player_data[color].ongoing = count
-                    updateDeckSize(color)
-                end
-            end
-        end
-    end
+    scoreboard.refreshCountsOnZoneChange(zone, object)
 end
 
 function onObjectLeaveScriptingZone(zone, object)
-    local zone_id = zone.getGUID()
-    for color, o in pairs(constants.zones) do
-        for key, id in pairs(o) do
-            if zone_id == id then
-                if key == "pile" then -- Count gem pile
-                    local name = object.getName()
-                    if name:match("%d Gem") then
-                        local count = countGems(zone)
-                        updateRow(color, count)
-                    end
-
-                    return
-                elseif key == "discard" then -- Count discard
-                    local count = countObjects(zone)
-                    player_data[color].discard = count
-                    updateDeckSize(color)
-                elseif key == "hand" then -- Count hand
-                    local count = countObjects(zone)
-                    player_data[color].hand = count
-                    UI.setAttribute(color .. "_hand", "text", count)
-                    updateDeckSize(color)
-                elseif key == "ongoing" then -- Count ongoing
-                    local count = countObjects(zone)
-                    player_data[color].ongoing = count
-                    updateDeckSize(color)
-                end
-            end
-        end
-    end
-end
-
-function updateRow(color, count)
-    UI.setAttribute(color .. "_pile", "text", count)
-    if 9 < count then
-        UI.setAttribute(color, "color", "rgba(1, 0, 0, 0.31)")
-    elseif 8 < count then
-        UI.setAttribute(color, "color", "rgba(1, 0.5, 0, 0.31)")
-    elseif 5 < count then
-        UI.setAttribute(color, "color", "rgba(1, 1, 0, 0.31)")
-    elseif 2 < count then
-        UI.setAttribute(color, "color", "rgba(0, 1, 0, 0.31)")
-    else
-        UI.setAttribute(color, "color", "rgba(0, 0, 0, 0)")
-    end
+    scoreboard.refreshCountsOnZoneChange(zone, object)
 end
 
 function countObjectsInContainer(container)
