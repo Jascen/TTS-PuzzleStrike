@@ -1,0 +1,50 @@
+settings = {}
+
+function settings.enableRotateBank(value)
+    if value == "True" then
+      game_settings.rotateBank = true
+      bank.rotateBankForColor(Turns.turn_color)
+    else
+      game_settings.rotateBank = false
+    end
+end
+
+function settings.enablePlaceholder(value)
+    if value == "True" then
+      game_settings.showLabels = true
+    else
+      game_settings.showLabels = false
+    end
+
+    for i, id in ipairs(constants.labels) do
+        local label = getObjectFromGUID(id)
+        if game_settings.showLabels == true then
+            label.TextTool.setValue(tostring(i))
+        else
+            label.TextTool.setValue(" ")
+        end
+    end
+end
+  
+function settings.enableTools(value)
+    if value == "True" then
+      game_settings.enableTools = true
+      UI.setAttribute("Tools", "active", true)
+    else
+      game_settings.enableTools = false
+      UI.setAttribute("Tools", "active", false)
+    end
+end
+
+function settings.close()
+    UI.setAttribute("Settings", "active", false)
+end
+
+function settings.toggleVisibility()
+    local opened = UI.getAttribute("Settings", "active")
+    if opened == "True" then
+        UI.setAttribute("Settings", "active", false)
+    else
+        UI.setAttribute("Settings", "active", true)
+    end
+end

@@ -1,6 +1,9 @@
 -- This file exists to house all pass-through functions
 
 require("windows/character-list/_character-list")
+require("windows/host/host")
+require("windows/new-game/new-game")
+require("windows/settings/settings")
 
 windows = {}
 function windows.initialize()
@@ -45,81 +48,36 @@ function startGame()
 end
 
 function selectMode(player, option, id)
-    if option == "Random" then
-        mode = constants.modes.random
-    elseif option == "Manual" then
-        mode = constants.modes.manual
-    elseif option == "Draft" then
-        mode = constants.modes.draft
-    elseif option == "First Game" then
-        mode = constants.modes.beginner
-    end
+    newGame.selectMode(option)
 end
 
 function minimizeScoreboard(player)
-    windowUtil.showForPlayer(player, "Scoreboard_content", show["Scoreboard"])
+    scoreboard.minimize(player)
 end
 
 function toggleRotateBank(_, value)
-    if value == "True" then
-      game_settings.rotateBank = true
-      bank.rotateBankForColor(Turns.turn_color)
-    else
-      game_settings.rotateBank = false
-    end
+    settings.enableRotateBank(value)
 end
 
 function togglePlaceholder(_, value)
-    if value == "True" then
-      game_settings.showLabels = true
-    else
-      game_settings.showLabels = false
-    end
-
-    for i, id in ipairs(constants.labels) do
-        local label = getObjectFromGUID(id)
-        if game_settings.showLabels == true then
-            label.TextTool.setValue(tostring(i))
-        else
-            label.TextTool.setValue(" ")
-        end
-    end
+    settings.enablePlaceholder(value)
 end
 
 function toggleHostOptions()
-    local opened = UI.getAttribute("HostOptions_content", "active")
-    if opened == "False" then
-      UI.setAttribute("HostOptions", "height", 75)
-      UI.setAttribute("HostOptions_content", "active", true)
-    else
-      UI.setAttribute("HostOptions", "height", 25)
-      UI.setAttribute("HostOptions_content", "active", false)
-    end
+    host.toggleVisibility()
 end
   
 function closeSettings()
-    UI.setAttribute("Settings", "active", false)
+    settings.close()
 end
   
 function toggleSettings()
-    local opened = UI.getAttribute("Settings", "active")
-    if opened == "True" then
-        UI.setAttribute("Settings", "active", false)
-    else
-        UI.setAttribute("Settings", "active", true)
-    end
+    settings.toggleVisibility()
 end
   
 function toggleEnableTools(_, value)
-    if value == "True" then
-      game_settings.enableTools = true
-      UI.setAttribute("Tools", "active", true)
-    else
-      game_settings.enableTools = false
-      UI.setAttribute("Tools", "active", false)
-    end
+    settings.enableTools(value)
 end
-
 
 function nextChar(player)
     characterList.nextChar(player)

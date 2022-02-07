@@ -1,0 +1,12 @@
+host = {}
+
+function host.toggleVisibility()
+    local opened = UI.getAttribute("HostOptions_content", "active")
+    if opened == "False" then
+      UI.setAttribute("HostOptions", "height", 75)
+      UI.setAttribute("HostOptions_content", "active", true)
+    else
+      UI.setAttribute("HostOptions", "height", 25)
+      UI.setAttribute("HostOptions_content", "active", false)
+    end
+end

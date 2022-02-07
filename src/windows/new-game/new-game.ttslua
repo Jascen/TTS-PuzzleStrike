@@ -1,0 +1,13 @@
+newGame = {}
+
+function newGame.selectMode(option)
+    if option == "Random" then
+        mode = constants.modes.random
+    elseif option == "Manual" then
+        mode = constants.modes.manual
+    elseif option == "Draft" then
+        mode = constants.modes.draft
+    elseif option == "First Game" then
+        mode = constants.modes.beginner
+    end
+end

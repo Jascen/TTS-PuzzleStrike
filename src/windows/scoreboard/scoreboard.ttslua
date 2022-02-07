@@ -89,3 +89,7 @@ function scoreboard.countObjects(zone)
 
     return count
 end
+
+function scoreboard.minimize(player)
+    windowUtil.showForPlayer(player, "Scoreboard_content", show["Scoreboard"])
+end
