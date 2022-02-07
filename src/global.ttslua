@@ -41,36 +41,16 @@ player_data = {
     }
 }
 
---- Rotates the bank to look at the side of the board based on whose turn it is
-function onPlayerTurnStart(current, previous)
-    if previous == nil or previous == '' then return end
+function onSave()
+    saved_data = JSON.encode({
+        player_data = player_data,
+        game_settings = game_settings,
+        current_player = Turns.turn_color
+    })
 
-    bank.restack()
-    bank.rotateBankForColor(current)
-end
-
--------- Table Value Tracking
-
-function onObjectEnterContainer(container, object)
-    scoreboard.refreshDeckOnContainerChange(container)
-end
-
-function onObjectLeaveContainer(container, object)
-    if object.tag == 'Tile' then
-        object.setCustomObject({
-            stackable = false
-        })
-    end
-
-    scoreboard.refreshDeckOnContainerChange(container)
-end
-
-function onObjectEnterScriptingZone(zone, object)
-    scoreboard.refreshCountsOnZoneChange(zone, object)
-end
-
-function onObjectLeaveScriptingZone(zone, object)
-    scoreboard.refreshCountsOnZoneChange(zone, object)
+    -- saved_data = "" -- Clear the saved data
+    
+    return saved_data
 end
 
 function onLoad(save_state)
@@ -93,15 +73,33 @@ function onLoad(save_state)
     scoreboard.updatePlayers()
 end
 
-function onSave()
-    saved_data = JSON.encode({
-        player_data = player_data,
-        game_settings = game_settings,
-        current_player = Turns.turn_color
-    })
+function onPlayerTurnStart(current, previous)
+    if previous == nil or previous == '' then return end
 
-    -- saved_data = ""
-    return saved_data
+    bank.restack()
+    bank.rotateBankForColor(current)
+end
+
+function onObjectEnterContainer(container, object)
+    scoreboard.refreshDeckOnContainerChange(container)
+end
+
+function onObjectLeaveContainer(container, object)
+    if object.tag == 'Tile' then
+        object.setCustomObject({
+            stackable = false
+        })
+    end
+
+    scoreboard.refreshDeckOnContainerChange(container)
+end
+
+function onObjectEnterScriptingZone(zone, object)
+    scoreboard.refreshCountsOnZoneChange(zone, object)
+end
+
+function onObjectLeaveScriptingZone(zone, object)
+    scoreboard.refreshCountsOnZoneChange(zone, object)
 end
 
 function onPlayerChangeColor(color)
