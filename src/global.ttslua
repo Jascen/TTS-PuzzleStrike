@@ -1,7 +1,4 @@
-require("constants")
-require("constants-characters")
-require("bank")
-require("utility")
+require("shared/_module")
 require("windows/_module")
 
 current_bank = {}

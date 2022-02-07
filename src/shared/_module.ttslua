@@ -1,0 +1,4 @@
+require("shared/constants")
+require("shared/constants-characters")
+require("shared/bank")
+require("shared/utility")
