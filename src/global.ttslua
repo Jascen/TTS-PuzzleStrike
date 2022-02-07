@@ -91,36 +91,6 @@ function onLoad(save_state)
     MegaFreeze()
     windows.initialize()
     scoreboard.updatePlayers()
-    applyGameSettings()
-end
-
-function applyGameSettings()
-    if game_settings.initialized == true then
-      UI.setAttribute("NewGame", "active", false)
-    else
-      UI.setAttribute("NewGame", "active", true)
-    end
-
-    if game_settings.enableTools == true then
-        UI.setAttribute("Tools", "active", true)
-        UI.setAttribute("ShowTools", "isOn", true)
-      else
-        UI.setAttribute("Tools", "active", false)
-        UI.setAttribute("ShowTools", "isOn", false)
-    end
-
-    if game_settings.showLabels == true then
-        UI.setAttribute("ShowBankLabels", "isOn", true)
-      else
-        UI.setAttribute("ShowBankLabels", "isOn", false)
-    end
-
-    if game_settings.rotateBank == true then
-        UI.setAttribute("RotateBank", "isOn", true)
-        bank.rotateBankForColor(Turns.turn_color)
-    else
-        UI.setAttribute("RotateBank", "isOn", false)
-    end
 end
 
 function onSave()

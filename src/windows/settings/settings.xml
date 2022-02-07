@@ -4,8 +4,8 @@
     <Button class="closeButton" onClick="closeSettings" offsetXY="-5 -5"/>
 
     <Panel color="rgba(0,0,0,1)" offsetXY="0 -25">
-        <Toggle onValueChanged="togglePlaceholder" offsetXY="15 30" text=" Show bank placeholder text" width="300" textColor="#FFFFFF"></Toggle>
-        <Toggle onValueChanged="toggleRotateBank" offsetXY="15 5" text=" Rotate bank to face active player" width="300" textColor="#FFFFFF"></Toggle>
-        <Toggle onValueChanged="toggleEnableTools" offsetXY="15 -20" text=" Show player Tools" width="300" textColor="#FFFFFF"></Toggle>
+        <Toggle id="ShowBankLabels" onValueChanged="togglePlaceholder" offsetXY="15 30" text=" Show bank placeholder text" width="300" textColor="#FFFFFF"></Toggle>
+        <Toggle id="RotateBank" onValueChanged="toggleRotateBank" offsetXY="15 5" text=" Rotate bank to face active player" width="300" textColor="#FFFFFF"></Toggle>
+        <Toggle id="ShowTools" onValueChanged="toggleEnableTools" offsetXY="15 -20" text=" Show player Tools" width="300" textColor="#FFFFFF"></Toggle>
     </Panel>
 </Panel>

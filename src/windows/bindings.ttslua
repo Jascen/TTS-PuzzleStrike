@@ -3,6 +3,7 @@
 windows = {}
 function windows.initialize()
     characterList.buildMap()
+    settings.initialize()
 end
 
 -- TODO: Switch to "windows." and move these things into respective files
