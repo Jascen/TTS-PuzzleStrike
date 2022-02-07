@@ -1,0 +1,50 @@
+discard = {}
+
+discard.areas = {
+    Blue = "b8e029",
+    Green = "43c0e5",
+    Purple = "4a01eb",
+    Red = "4d3266",
+}
+
+function discard.prompt(show_player_color, color)
+    local area = discard.areas[color]
+    local play_area = getObjectFromGUID(area)
+    local toDestroy = discard.markArea(play_area)
+
+    if toDestroy[1] ~= nil then Global.UI.setAttribute(color .. "_DiscardPrompt", "visibility", show_player_color) end
+end
+
+function discard.clickNo(color)
+    Global.UI.setAttribute(color .. "_DiscardPrompt", "visibility", "Black")
+end
+
+function discard.clickYes(color)
+    local area = discard.areas[color]
+    Global.UI.setAttribute(color .. "_DiscardPrompt", "visibility", "Black")
+    local play_area = getObjectFromGUID(area)
+    local toDestroy = discard.markArea(play_area)
+    local zone = constants.zones[color]
+    local discardZone = getObjectFromGUID(zone.discard)
+    moveAllToDiscard({discardZone, toDestroy})
+    discard.clickNo(color)
+end
+
+function discard.markArea(discard_area)
+    local objToDestroy = {}
+
+    if discard_area ~= nil then
+        for _, object in ipairs(discard_area.getObjects()) do
+            if discard.isCustomChip(object) then
+                object.highlightOn({1, 0, 0}, 5)
+                table.insert(objToDestroy, object)
+            end
+        end
+    end
+
+    return objToDestroy
+end
+
+function discard.isCustomChip(object)
+    return object ~= nil and object.tag == 'Tile' and object.getCustomObject().type == 2
+end

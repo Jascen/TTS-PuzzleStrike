@@ -1,0 +1,28 @@
+color = "Red"
+
+function onLoad(save_state)
+    buttonParameter = {
+        function_owner = self,
+        label = "Discard Area",
+        width = 600,
+        font_color = {0.98, 0.98, 0.98},
+        font_size = 80,
+        color = {0.501, 0.501, 0.501},
+        click_function = "promptDiscard",
+        position = {2, 0.25, -1.35}
+    }
+
+    self.createButton(buttonParameter)
+end
+
+function promptDiscard(object, player_color)
+    Global.call("discardPrompt", {player_color, color})
+end
+
+function noDiscardClicked(player)
+    Global.call("discardClickNo", color)
+end
+
+function yesDiscardClicked(player)
+    Global.call("discardClickYes", color)
+end

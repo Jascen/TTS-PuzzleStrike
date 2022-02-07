@@ -105,3 +105,17 @@ end
 function closeCharacterSelection(player)
     characterList.closeWindow(player)
 end
+
+function discardPrompt(params)
+    local show_player_color = params[1]
+    local target_color = params[2]
+    discard.prompt(show_player_color, target_color)
+end
+
+function discardClickNo(color)
+    discard.clickNo(color)
+end
+
+function discardClickYes(color)
+    discard.clickYes(color)
+end
