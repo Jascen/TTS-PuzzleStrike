@@ -74,7 +74,7 @@ function characterList.selectChar(player)
           if character ~= nil then
               local playerHand = player.getPlayerHand()
               if playerHand then
-                  local success = Global.call("makeDeck", player)
+                  local success = characterList.makeDeck(player)
                   if success == true then
                       for i, id in pairs(character.chips) do
                         local clone = getObjectFromGUID(id).clone()
@@ -95,6 +95,19 @@ function characterList.selectChar(player)
   
               characterList.closeWindow(player)
           end
+      end
+    end
+end
+
+function characterList.makeDeck(player)
+    local playerHand = player.getPlayerHand()
+    if playerHand then
+      local crash_bag = getObjectFromGUID(constants.bags["Crash"].id)
+      local gem_bag = getObjectFromGUID(constants.bags["1 Gem"].id)
+      if crash_bag ~= nil and gem_bag ~= nil then
+        crash_bag.deal(1, player.color)
+        gem_bag.deal(6, player.color)
+        return true
       end
     end
 end

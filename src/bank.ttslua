@@ -42,3 +42,34 @@ function bank.rotateBankForColor(color)
       end
     end
 end
+
+function bank.restack()
+    local bankZone = getObjectFromGUID(constants.bank_zone)
+    if bankZone == nil then return end
+
+    local bankObjects = bankZone.getObjects()
+    if bankObjects == nil then return end
+
+    -- Build unique list of highest object count
+    for _, o in pairs(getObjectFromGUID(constants.bank_zone).getObjects()) do
+        if o.getLock() ~= true and o.tag == 'Tile' then
+            local name = o.getName()
+            if name ~= nil and name ~= "" then
+                local bank_object = current_bank[name]
+                if bank_object ~= nil then
+                    local p = bank_object.position
+                    o.setPositionSmooth({
+                        p[1],
+                        p[2] + 1,
+                        p[3]
+                    }, false, true)
+                else
+                    local bag = constants.bags[name]
+                    if bag ~= nil and bag.id ~= nil then
+                        getObjectFromGUID(bag.id).putObject(o)
+                    end
+                end
+            end
+        end
+    end
+end

@@ -93,3 +93,20 @@ end
 function scoreboard.minimize(player)
     windowUtil.showForPlayer(player, "Scoreboard_content", show["Scoreboard"])
 end
+
+function scoreboard.updatePlayers()
+    local players = Player.getPlayers()
+    local seats = {}
+    for _, color in pairs(Player.getAvailableColors()) do seats[color] = false end
+
+    for _, player in pairs(players) do if player.color ~= nil and player.color ~= "" then seats[player.color] = player.steam_name end end
+
+    for color, player in pairs(seats) do
+        if player ~= nil and player ~= "" and player ~= false then
+            UI.setAttribute(color .. "_name", "text", player)
+            UI.setAttribute(color, "active", true)
+        else
+            UI.setAttribute(color, "active", false)
+        end
+    end
+end

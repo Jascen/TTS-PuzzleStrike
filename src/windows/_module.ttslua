@@ -1,0 +1,8 @@
+require("windows/character-list/_character-list")
+require("windows/host/host")
+require("windows/new-game/new-game")
+require("windows/scoreboard/scoreboard")
+require("windows/settings/settings")
+require("windows/tools/tools")
+require("windows/bindings")
+require("windows/utility")

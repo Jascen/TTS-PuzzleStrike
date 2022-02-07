@@ -1,12 +1,8 @@
 require("constants")
 require("constants-characters")
-require("setup")
 require("bank")
 require("utility")
-require("windows/_bindings")
-require("windows/_utility")
-require("windows/tools/tools")
-require("windows/scoreboard/scoreboard")
+require("windows/_module")
 
 current_bank = {}
 
@@ -52,36 +48,8 @@ player_data = {
 function onPlayerTurnStart(current, previous)
     if previous == nil or previous == '' then return end
 
-    local bankZone = getObjectFromGUID(constants.bank_zone)
-    if bankZone == nil then return end
-
-    local bankObjects = bankZone.getObjects()
-    if bankObjects == nil then return end
-
-    -- Build unique list of highest object count
-    for _, o in pairs(getObjectFromGUID(constants.bank_zone).getObjects()) do
-        if o.getLock() ~= true and o.tag == 'Tile' then
-            local name = o.getName()
-            if name ~= nil and name ~= "" then
-                local bank_object = current_bank[name]
-                if bank_object ~= nil then
-                    local p = bank_object.position
-                    o.setPositionSmooth({
-                        p[1],
-                        p[2] + 1,
-                        p[3]
-                    }, false, true)
-                else
-                    local bag = constants.bags[name]
-                    if bag ~= nil and bag.id ~= nil then
-                            getObjectFromGUID(bag.id).putObject(o)
-                    end
-                end
-            end
-        end
-    end
-
-  bank.rotateBankForColor(current)
+    bank.restack()
+    bank.rotateBankForColor(current)
 end
 
 -------- Table Value Tracking
@@ -123,10 +91,10 @@ function onLoad(save_state)
         end
     end
 
-    applyGameSettings()
     MegaFreeze()
-    updatePlayers()
     windows.initialize()
+    scoreboard.updatePlayers()
+    applyGameSettings()
 end
 
 function applyGameSettings()
@@ -169,48 +137,9 @@ function onSave()
     return saved_data
 end
 
-function updatePlayers()
-    local players = Player.getPlayers()
-    local seats = {}
-    for _, color in pairs(Player.getAvailableColors()) do seats[color] = false end
-
-    for _, player in pairs(players) do if player.color ~= nil and player.color ~= "" then seats[player.color] = player.steam_name end end
-
-    for color, player in pairs(seats) do
-        if player ~= nil and player ~= "" and player ~= false then
-            UI.setAttribute(color .. "_name", "text", player)
-            UI.setAttribute(color, "active", true)
-        else
-            UI.setAttribute(color, "active", false)
-        end
-    end
-end
-
 function onPlayerChangeColor(color)
-    updatePlayers()
+    scoreboard.updatePlayers()
 end
-
--- UI - New Game --
-mode = constants.modes.random
-
--- UI - New Game --
-
--- UI - Character Selection --
-
-function makeDeck(player)
-    local playerHand = player.getPlayerHand()
-    if playerHand then
-      local crash_bag = getObjectFromGUID(constants.bags["Crash"].id)
-      local gem_bag = getObjectFromGUID(constants.bags["1 Gem"].id)
-      if crash_bag ~= nil and gem_bag ~= nil then
-        crash_bag.deal(1, player.color)
-        gem_bag.deal(6, player.color)
-        return true
-      end
-    end
-end
-
--- UI - Character Selection --
 
 function MegaFreeze()
     local freezeByZone = {} -- Place GUIDs of script zones here

@@ -1,10 +1,5 @@
 -- This file exists to house all pass-through functions
 
-require("windows/character-list/_character-list")
-require("windows/host/host")
-require("windows/new-game/new-game")
-require("windows/settings/settings")
-
 windows = {}
 function windows.initialize()
     characterList.buildMap()
@@ -44,7 +39,7 @@ show = {
 }
 
 function startGame()
-    setup.startGame()
+    newGame.startGame()
 end
 
 function selectMode(player, option, id)
