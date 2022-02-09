@@ -4,9 +4,6 @@
 
 # Feedback
 - Please feel free to leave any encouraging words on the steam workshop page.
-
-# Issues
-- Please open an issue on this GitHub Repository if you have a concern or issue.
-
-# Feature Requests
-- Please open an issue on this GitHub repository if you would like to discuss any feature requests.
+- [Review open items](../../issues)
+- [Report a bug](../../issues/new?assignees=&labels=&template=bug_report.md&title=%5BBUG%5D+)
+- [Make a request](../../issues/new?assignees=&labels=&template=feature_request.md&title=%5BREQUEST%5D+)
