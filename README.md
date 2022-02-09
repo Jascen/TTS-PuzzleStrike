@@ -1,5 +1,6 @@
 # Puzzle Strike Workshop for Tabletop Simulator
-- [Puzzle Strike Board Game](https://sirlingames.com/puzzlestrike)
+- [Official Puzzle Strike Board Game site](https://sirlingames.com/puzzlestrike)
+- [QuickStart](../../wiki/QuickStart)
 - [Workshop Wiki](../../wiki) 
 
 # Feedback
