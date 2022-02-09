@@ -1,23 +1,12 @@
 # Puzzle Strike Workshop for Tabletop Simulator
 - [Puzzle Strike Board Game](https://sirlingames.com/puzzlestrike)
+- [Workshop Wiki](../../wiki) 
 
-# Development Environment
-- [VSCode](https://code.visualstudio.com/download)
-- [EmmyLua Extension](https://marketplace.visualstudio.com/items?itemName=tangzx.emmylua)
-- [TTS Extension](https://marketplace.visualstudio.com/items?itemName=rolandostar.tabletopsimulator-lua])
+# Feedback
+- Please feel free to leave any encouraging words on the steam workshop page.
 
-# Code Structure
-### Global.ttslua
-- Subscribes to lifecycle events
-- Imports all necessary Lua files
-### Global.xml
-- Imports all XML files
-### objects
-- Actual objects in the workshop that require code
-### shared
-- Code that is used by multiple parts of the application
-- Utility methods are pure (stateless) functions
-- Constants files do not change during runtime
-### windows
-- All UI elements and their associated code
-- Bindings.ttslua - Non-namespaced functions that pass-through calls that are used on the UI. These functions pass should not contain much 
+# Issues
+- Please open an issue on this GitHub Repository if you have a concern or issue.
+
+# Feature Requests
+- Please open an issue on this GitHub repository if you would like to discuss any feature requests.
