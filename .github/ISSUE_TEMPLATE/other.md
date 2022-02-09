@@ -1,6 +1,6 @@
 ---
 name: Other
-about: Describe this issue template's purpose here.
+about: 
 title: "[OTHER] "
 labels: ''
 assignees: ''
