@@ -8,21 +8,6 @@ end
 
 -- TODO: Switch to "windows." and move these things into respective files
 show = {
-    CharacterList = {
-        Purple = {
-            currentId = 1
-        },
-        Red = {
-            currentId = 1
-        },
-        Green = {
-            currentId = 1
-        },
-        Blue = {
-            currentId = 1
-        }
-    },
-
     Scoreboard = {
         Purple = {
             visible = true
@@ -75,20 +60,24 @@ function toggleEnableTools(_, value)
     settings.enableTools(value)
 end
 
+function toggleCharacterList(player)
+    characterList.toggleCharacterList(player.color)
+end
+
 function nextChar(player)
-    characterList.nextChar(player)
+    characterList.nextChar(player.color)
 end
 
 function prevChar(player)
-    characterList.prevChar(player)
+    characterList.prevChar(player.color)
 end
 
 function optionSelected(player, name)
-    characterList.optionSelected(player, name)
+    characterList.optionSelected(player.color, name)
 end
 
 function inspectCharacter(player, character, name)
-    characterList.inspectCharacter(player, character, name)
+    characterList.inspectCharacter(player.color, character, name)
 end
 
 function selectChar(player)
@@ -96,15 +85,15 @@ function selectChar(player)
 end
 
 function randomizeCharacter(player)
-    characterList.randomizeCharacter(player)
+    characterList.randomizeCharacter(player.color)
 end
 
 function selectCharacter(player)
-    characterList.selectCharacter(player)
+    characterList.selectCharacter(player.color)
 end
 
 function closeCharacterSelection(player)
-    characterList.closeWindow(player)
+    characterList.closeWindow(player.color)
 end
 
 function discardPrompt(params)

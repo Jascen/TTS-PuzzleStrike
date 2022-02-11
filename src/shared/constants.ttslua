@@ -1,5 +1,12 @@
 constants = {}
 
+constants.player_colors = {
+    "Red",
+    "Purple",
+    "Green",
+    "Blue",
+}
+
 constants.labels = {
     "190e7e",
     "b7b868",

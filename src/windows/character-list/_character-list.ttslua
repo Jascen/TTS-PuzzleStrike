@@ -1,5 +1,48 @@
 characterList = {}
 
+characterList.player_data = {
+    Purple = {
+        currentId = 1
+    },
+    Red = {
+        currentId = 1
+    },
+    Green = {
+        currentId = 1
+    },
+    Blue = {
+        currentId = 1
+    }
+}
+
+function characterList.toggleCharacterList(color)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then
+        broadcastToAll(player.steam_name .. " must choose Red, Purple, Green, or Blue.", {
+                0.8,
+                0.05,
+                0.05
+            })
+        return
+    end
+
+    local opened = UI.getAttribute(color .. "_CharacterList", "active")
+    if opened == "True" or opened == true then
+        characterList.showCharacterList(color, false)
+    else
+        characterList.showCharacterList(color, true)
+    end
+end
+
+function characterList.showCharacterList(color, show)
+    if show == "True" or show == true then
+        UI.setAttribute(color .. "_CharacterList", "active", true)
+    else
+        UI.setAttribute(color .. "_CharacterList", "active", false)
+    end
+end
+
+-- TODO: Rename initialize
 function characterList.buildMap()
     -- Build the Name to Index charcter map
     character_map = {}
@@ -10,129 +53,161 @@ function characterList.buildMap()
         i = i + 1
     end
 
+    for _, color in pairs(constants.player_colors) do
+        characterList.selectCharacter(color)
+    end
+
     -- TODO: Required ???
     local character_bag = getObjectFromGUID("87a183")
     character_bag.interactable = false
 end
 
-function characterList.nextChar(player)
-    local currentId = show.CharacterList[player.color].currentId
+function characterList.nextChar(color)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then return end
+
+    local currentId = player_data.currentId
     local name = character_map[currentId + 1]
     if name ~= nil then
         local character = characters[name]
-        if character ~= nil then characterList.inspectCharacter(player, character, name) end
+        if character ~= nil then
+            characterList.inspectCharacter(color, character, name)
+        end
 
-        show.CharacterList[player.color].currentId = currentId + 1
+        player_data.currentId = currentId + 1
     end
 end
 
-function characterList.prevChar(player)
-    local currentId = show.CharacterList[player.color].currentId
+function characterList.prevChar(color)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then return end
+
+    local currentId = player_data.currentId
     local name = character_map[currentId - 1]
     if name ~= nil then
         local character = characters[name]
-        if character ~= nil then characterList.inspectCharacter(player, character, name) end
-        show.CharacterList[player.color].currentId = currentId - 1
+        if character ~= nil then
+            characterList.inspectCharacter(color, character, name)
+        end
+
+        player_data.currentId = currentId - 1
     end
 end
 
-function characterList.optionSelected(player, name)
+function characterList.optionSelected(color, name)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then return end
+
     local character = characters[name]
     if character ~= nil then
-        characterList.inspectCharacter(player, character, name)
-        show.CharacterList[player.color].currentId = character.index
+        characterList.inspectCharacter(color, character, name)
+        player_data.currentId = character.index
     end
 end
 
-function characterList.inspectCharacter(player, character, name)
-    UI.setAttribute(player.color .. "_char_name", "text", name)
-    UI.setAttribute(player.color .. "_char_pic", "image", character.id)
-    UI.setAttribute(player.color .. "_char_desc", "text", character.description)
+function characterList.inspectCharacter(color, character, name)
+    UI.setAttribute(color .. "_char_name", "text", name)
+    UI.setAttribute(color .. "_char_pic", "image", character.id)
+    UI.setAttribute(color .. "_char_desc", "text", character.description)
 
     if name ~= "Beginner" then
-        UI.setAttribute(player.color .. "_char_chip_1", "image", character.id .. "_1")
-        UI.setAttribute(player.color .. "_char_chip_2", "image", character.id .. "_2")
-        UI.setAttribute(player.color .. "_char_chip_3", "image", character.id .. "_3")
+        UI.setAttribute(color .. "_char_chip_1", "image", character.id .. "_1")
+        UI.setAttribute(color .. "_char_chip_2", "image", character.id .. "_2")
+        UI.setAttribute(color .. "_char_chip_3", "image", character.id .. "_3")
     else
-        UI.setAttribute(player.color .. "_char_chip_1", "image", "setsuki_hiruki_1")
-        UI.setAttribute(player.color .. "_char_chip_2", "image", "garus_rook_1")
-        UI.setAttribute(player.color .. "_char_chip_3", "image", "valerie_rose_1")
+        UI.setAttribute(color .. "_char_chip_1", "image", "setsuki_hiruki_1")
+        UI.setAttribute(color .. "_char_chip_2", "image", "garus_rook_1")
+        UI.setAttribute(color .. "_char_chip_3", "image", "valerie_rose_1")
     end
 end
 
 function characterList.selectChar(player)
     if game_settings.initialized ~= true then
-        broadcastToAll(player.steam_name .. " cannot select a character the game has not started.", {
-            0.8,
-            0.05,
-            0.05
-        })
-    else
-      local name = character_map[show.CharacterList[player.color].currentId]
-      if name ~= nil then
-          local character = characters[name]
-          if character ~= nil then
-              local playerHand = player.getPlayerHand()
-              if playerHand then
-                  local success = characterList.makeDeck(player)
-                  if success == true then
-                      for i, id in pairs(character.chips) do
+        broadcastToAll(
+            player.steam_name .. " cannot select a character the game has not started.",
+            {
+                0.8,
+                0.05,
+                0.05
+            }
+        )
+        return
+    end
+
+    local player_data = characterList.getPlayerData(player.color)
+    if player_data == nil then return end
+
+    local name = character_map[player_data.currentId]
+    if name ~= nil then
+        local character = characters[name]
+        if character ~= nil then
+            local playerHand = player.getPlayerHand()
+            if playerHand then
+                local success = characterList.makeDeck(player)
+                if success == true then
+                    for i, id in pairs(character.chips) do
                         local clone = getObjectFromGUID(id).clone()
                         Wait.condition(function()
                             clone.deal(1, player.color)
                         end, function()
                             return clone.getGUID() ~= id
                         end)
-                      end
-                  end
-              else
-                  broadcastToAll(player.steam_name .. " cannot select a character because the color " .. player.color .. " has no hand region.", {
-                      0.8,
-                      0.05,
-                      0.05
-                  })
-              end
-  
-              characterList.closeWindow(player)
-          end
-      end
+                    end
+                end
+            else
+                broadcastToAll(player.steam_name .. " cannot select a character because the color " .. player.color .. " has no hand region.", {
+                        0.8,
+                        0.05,
+                        0.05
+                    }
+                )
+            end
+
+            characterList.closeWindow(player.color)
+        end
     end
 end
 
 function characterList.makeDeck(player)
     local playerHand = player.getPlayerHand()
     if playerHand then
-      local crash_bag = getObjectFromGUID(constants.bags["Crash"].id)
-      local gem_bag = getObjectFromGUID(constants.bags["1 Gem"].id)
-      if crash_bag ~= nil and gem_bag ~= nil then
-        crash_bag.deal(1, player.color)
-        gem_bag.deal(6, player.color)
-        return true
-      end
-    end
-end
-
-function characterList.randomizeCharacter(player)
-    local color = player.color
-    if show.CharacterList[color] ~= nil then
-      show.CharacterList[color].currentId = math.random(#character_map)
-      
-      characterList.selectCharacter(player)
-    end
-end
-
-function characterList.selectCharacter(player)
-    local color = player.color
-    if show.CharacterList[color] ~= nil then
-        local currentId = show.CharacterList[color].currentId
-        local name = character_map[currentId]
-        if name ~= nil then
-            local character = characters[name]
-            if character ~= nil then characterList.inspectCharacter(player, character, name) end
+        local crash_bag = getObjectFromGUID(constants.bags["Crash"].id)
+        local gem_bag = getObjectFromGUID(constants.bags["1 Gem"].id)
+        if crash_bag ~= nil and gem_bag ~= nil then
+            crash_bag.deal(1, player.color)
+            gem_bag.deal(6, player.color)
+            return true
         end
     end
 end
 
-function characterList.closeWindow(player)
-    UI.setAttribute(player.color .. "_CharacterList", "active", false)
+function characterList.randomizeCharacter(color)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then return end
+
+    player_data.currentId = math.random(#character_map)
+    characterList.selectCharacter(color)
+end
+
+function characterList.selectCharacter(color)
+    local player_data = characterList.getPlayerData(color)
+    if player_data == nil then
+        return
+    end
+
+    local name = character_map[player_data.currentId]
+    if name ~= nil then
+        local character = characters[name]
+        if character ~= nil then
+            characterList.inspectCharacter(color, character, name)
+        end
+    end
+end
+
+function characterList.closeWindow(color)
+    UI.setAttribute(color .. "_CharacterList", "active", false)
+end
+
+function characterList.getPlayerData(color)
+    return characterList.player_data[color]
 end

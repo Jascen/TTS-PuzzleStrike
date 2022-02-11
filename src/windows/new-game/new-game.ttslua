@@ -18,68 +18,67 @@ end
 -- mode - The bank building mode
 function newGame.startGame()
     if game_settings.initialized == true then return end
-  
+
     game_settings.initialized = true
-  
+
     draftBoard = getObjectFromGUID(draftBoard_id)
     chip_keys = utility.extractKeysFromTable(constants.chip_obj)
-  
+
     newGame.setupDefaultBoard()
-  
-      local chips = nil
-      if newGame.selectedMode == constants.modes.random then
-          -- TODO: Promote?
-          -- TODO: Place stage?
-          chips = newGame.getRandomChips(chip_keys, 10, {})
-          newGame.buildBank_ChipRows(chips)
-          -- destroyDraftBoard()
-      elseif newGame.selectedMode == constants.modes.beginner then
-          -- TODO: Promote?
-          -- TODO: Place stage?
-  
-          chips = {}
-          chips["combos_are_hard"] = constants.chip_obj["combos_are_hard"]
-          chips["draw_three"] = constants.chip_obj["draw_three"]
-          chips["gem_essence"] = constants.chip_obj["gem_essence"]
-          chips["knockdown"] = constants.chip_obj["knockdown"]
-          chips["one_of_each"] = constants.chip_obj["one_of_each"]
-          chips["one_two_punch"] = constants.chip_obj["one_two_punch"]
-          chips["risky_move"] = constants.chip_obj["risky_move"]
-          chips["sale_prices"] = constants.chip_obj["sale_prices"]
-          chips["self_improvement"] = constants.chip_obj["self_improvement"]
-          chips["sneak_attack"] = constants.chip_obj["sneak_attack"]
-          newGame.buildBank_ChipRows(chips)
-          -- destroyDraftBoard()
-      elseif newGame.selectedMode == constants.modes.manual then
-          -- Do nothing
-      else
-          draftBoard.setPosition({
-              0,
-              1.01,
-              0
-          })
-          draftBoard.lock()
-          draftBoard.interactable = false
-  
-          -- TODO: Implement draft mode
-          if newGame.selectedMode == constants.modes.draft then
-              chips = newGame.getRandomChips(chip_keys, 5, staged_chips)
-              displayCandidates(chips, true)
-          elseif newGame.selectedMode == constants.modes.manual then
-              displayCandidates(constants.chip_obj, false)
-          end
-      end
-  
-      UI.setAttribute("NewGame", "active", false)
-      local characterObject = getObjectFromGUID(constants.character_sheet)
-      if characterObject ~= nil then
-          local players = Player.getPlayers()
-          for _, player in pairs(players) do
-              characterObject.call('toggleCharacterList', player)
-          end
-      end
-      
-      Turns.enable = true
+
+    local chips = nil
+    if newGame.selectedMode == constants.modes.random then
+        -- destroyDraftBoard()
+        -- TODO: Promote?
+        -- TODO: Place stage?
+        chips = newGame.getRandomChips(chip_keys, 10, {})
+        newGame.buildBank_ChipRows(chips)
+    elseif newGame.selectedMode == constants.modes.beginner then
+        -- destroyDraftBoard()
+        -- TODO: Promote?
+        -- TODO: Place stage?
+
+        chips = {}
+        chips["combos_are_hard"] = constants.chip_obj["combos_are_hard"]
+        chips["draw_three"] = constants.chip_obj["draw_three"]
+        chips["gem_essence"] = constants.chip_obj["gem_essence"]
+        chips["knockdown"] = constants.chip_obj["knockdown"]
+        chips["one_of_each"] = constants.chip_obj["one_of_each"]
+        chips["one_two_punch"] = constants.chip_obj["one_two_punch"]
+        chips["risky_move"] = constants.chip_obj["risky_move"]
+        chips["sale_prices"] = constants.chip_obj["sale_prices"]
+        chips["self_improvement"] = constants.chip_obj["self_improvement"]
+        chips["sneak_attack"] = constants.chip_obj["sneak_attack"]
+        newGame.buildBank_ChipRows(chips)
+    elseif newGame.selectedMode == constants.modes.manual then
+        -- Do nothing
+    else
+        draftBoard.setPosition({
+            0,
+            1.01,
+            0
+        })
+        draftBoard.lock()
+        draftBoard.interactable = false
+
+        -- TODO: Implement draft mode
+        if newGame.selectedMode == constants.modes.draft then
+            chips = newGame.getRandomChips(chip_keys, 5, staged_chips)
+            displayCandidates(chips, true)
+        elseif newGame.selectedMode == constants.modes.manual then
+            displayCandidates(constants.chip_obj, false)
+        end
+    end
+
+    UI.setAttribute("NewGame", "active", false)
+    local characterObject = getObjectFromGUID(constants.character_sheet)
+    if characterObject ~= nil then
+        for _, color in pairs(constants.player_colors) do
+            characterList.showCharacterList(color, true)
+        end
+    end
+
+    Turns.enable = true
 end
 
 function newGame.buildBank_ChipRows(collection)
@@ -112,7 +111,9 @@ function newGame.buildBank_ChipRows(collection)
         }
 
         -- Create a stack for the bank
-        for i = 1, 5 do newGame.getChip(chip.key).setPosition(position) end
+        for i = 1, 5 do
+            newGame.getChip(chip.key).setPosition(position)
+        end
 
         bank.current[chip.name] = {
             position = position
@@ -138,7 +139,7 @@ end
 -- RETURNS -- A list of keys
 function newGame.getRandomChips(key_src, count, excluded_keys)
     if (key_src[1] == nil) then
-        print('The chip source has no keys.')
+        print("The chip source has no keys.")
         return {}
     end
 
@@ -160,16 +161,16 @@ end
 function newGame.setupDefaultBoard()
     local setupBag = getObjectFromGUID("5e08f3")
     if setupBag ~= nil then
-      for _, o in pairs(constants.bags) do
-        local infinite_bag = setupBag.takeObject({guid = o.infinite})
-        if infinite_bag ~= nil then
-          local clone = infinite_bag.takeObject()
-          if clone ~= nil then
-            setupBag.putObject(infinite_bag)
-            clone.setPositionSmooth(o.position, false, true)
-            clone.setLock(true)
-          end
+        for _, o in pairs(constants.bags) do
+            local infinite_bag = setupBag.takeObject({guid = o.infinite})
+            if infinite_bag ~= nil then
+                local clone = infinite_bag.takeObject()
+                if clone ~= nil then
+                    setupBag.putObject(infinite_bag)
+                    clone.setPositionSmooth(o.position, false, true)
+                    clone.setLock(true)
+                end
+            end
         end
-      end
     end
-  end
+end
