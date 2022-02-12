@@ -1,0 +1,34 @@
+[
+    {
+      "Name": "1_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/d/dc/PS_1-gem.png"
+    },
+    {
+      "Name": "2_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/a/aa/PS_2-gem.png"
+    },
+    {
+      "Name": "3_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/9/97/PS_3-gem.png"
+    },
+    {
+      "Name": "4_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/8/8e/PS_4-gem.png"
+    },
+    {
+      "Name": "wound",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/2/2b/PS_Wound.png"
+    },
+    {
+      "Name": "combine",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/0/0d/PS_Combine.png"
+    },
+    {
+      "Name": "crash_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/4/4f/PS_Crash_Gem.png"
+    },
+    {
+      "Name": "double_crash_gem",
+      "URL": "https://gameserver.fantasystrike.com/guide/images/0/02/PS_Double_Crash_Gem.png"
+    }
+]
