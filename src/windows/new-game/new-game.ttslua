@@ -89,12 +89,15 @@ function newGame.buildBank_ChipRows(collection)
     for _, chip in pairs(collection) do
         item_count = item_count + 1
         sorted[item_count] = chip
-        bankList.chipKeys[item_count] = chip.key
-        bankList.setChip(item_count, chip.key)
     end
 
     -- Sort the chips prior to laying them all out
     table.sort(sorted, utility.sortFunction)
+
+    for i, chip in pairs(sorted) do
+        bankList.chipKeys[i] = chip.key
+        bankList.setChip(i, chip.key)
+    end
 
     local item_width = 2.5
     local left_pad = 2.5

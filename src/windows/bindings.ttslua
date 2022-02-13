@@ -126,6 +126,6 @@ function closeBankWindow_red()
     bankList.show("red", false)
 end
 
-function showBankWindow(player)
+function toggleBankWindow(player)
     bankList.toggle(player.color)
 end

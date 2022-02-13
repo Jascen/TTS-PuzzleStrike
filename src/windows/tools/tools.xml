@@ -1,8 +1,8 @@
-<Panel id="Tools" class="Window" width="110" height="280" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
+<Panel id="Tools" class="Window" width="110" height="340" rectAlignment="MiddleRight" color="#69696940" visibility="Purple|Red|Green|Blue">
     <Panel class="TopBar" width="110"/>
     <Text class="WindowTitle">Tools</Text>
 
-    <Panel id="Tools_content" width="90" offsetXY="0 75">
+    <Panel id="Tools_content" width="90" offsetXY="0 105">
 
         <Button onClick="drawMaxHand" height="50" tooltipPosition="Left" tooltip="Draw to your max hand size">
             <Image image="clone" preserveAspect="1" width="15" offsetXY="-30 0"/>
@@ -14,7 +14,15 @@
             <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Discard</Text>
         </Button>
 
-        <Panel height="50" offsetXY="0 -180">
+        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gems in your hand">
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Show $$$</Text>
+        </Button>
+
+        <Button onClick="toggleBankWindow" height="50" offsetXY="0 -180" padding="10" tooltipPosition="Left" tooltip="Show all Bank chips in a window">
+            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">See Bank</Text>
+        </Button>
+
+        <Panel height="50" offsetXY="0 -240">
             <Button onClick="cycleDiscard" width="40" offsetXY="-25 0" tooltipPosition="Below" tooltip="Put your discard pile into your bag">
                 <Image image="recycle" preserveAspect="1" width="15" />
             </Button>
@@ -23,10 +31,6 @@
                 <Image image="sync-alt" preserveAspect="1" width="15" />
             </Button>
         </Panel>
-
-        <Button onClick="showMoney" height="50" offsetXY="0 -120" padding="10" tooltipPosition="Left" tooltip="Announce the sum of $ gems in your hand">
-            <Text fontStyle="Bold" offsetXY="10 0" color="#000000">Show $$$</Text>
-        </Button>
 
     </Panel>
 </Panel>

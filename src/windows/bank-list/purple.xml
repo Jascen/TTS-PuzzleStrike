@@ -1,4 +1,4 @@
-<Panel id="Purple_Bank_List" visibility="Purple" class="Window" width="800" height="600" active="true" color="#69696940">
+<Panel id="purple_BankList" visibility="Purple" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Bank Chips</Text>
     <Button class="closeButton" onClick="closeBankWindow_purple"/>

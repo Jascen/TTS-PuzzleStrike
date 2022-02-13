@@ -1,10 +1,10 @@
 
-<Panel id="Red_Bank_List" visibility="Red" class="Window" width="800" height="600" active="true" color="#69696940">
+<Panel id="red_BankList" visibility="Red" class="Window" width="800" height="350" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Bank Chips</Text>
     <Button class="closeButton" onClick="closeBankWindow_red"/>
 
-    <Panel height="200" offsetXY="-320 0">
+    <Panel height="200" offsetXY="-320 -110">
         <Panel offsetXY="0 75">
             <Image id="red_bank_chip_1" width="145" image="beginner" offsetXY="0 100"></Image>
         </Panel>

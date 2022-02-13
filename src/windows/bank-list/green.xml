@@ -1,4 +1,4 @@
-<Panel id="Green_Bank_List" visibility="Green" class="Window" width="800" height="600" active="true" color="#69696940">
+<Panel id="green_BankList" visibility="Green" class="Window" width="800" height="600" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Bank Chips</Text>
     <Button class="closeButton" onClick="closeBankWindow_green"/>
