@@ -1,0 +1,49 @@
+<Panel id="Purple_Bank_List" visibility="Purple" class="Window" width="800" height="600" active="true" color="#69696940">
+    <Panel class="TopBar" width="800"/>
+    <Text class="WindowTitle">Bank Chips</Text>
+    <Button class="closeButton" onClick="closeBankWindow_purple"/>
+
+    <Panel height="200" offsetXY="-320 0">
+        <Panel offsetXY="0 75">
+            <Image id="purple_bank_chip_1" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="160 75">
+            <Image id="purple_bank_chip_2" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="320 75">
+            <Image id="purple_bank_chip_3" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="480 75">
+            <Image id="purple_bank_chip_4" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="640 75">
+            <Image id="purple_bank_chip_5" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+    </Panel>
+
+    <Panel height="200" offsetXY="-320 -250">
+        <Panel offsetXY="0 75">
+            <Image id="purple_bank_chip_6" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="160 75">
+            <Image id="purple_bank_chip_7" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="320 75">
+            <Image id="purple_bank_chip_8" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="480 75">
+            <Image id="purple_bank_chip_9" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+
+        <Panel offsetXY="640 75">
+            <Image id="purple_bank_chip_10" width="145" image="beginner" offsetXY="0 100"></Image>
+        </Panel>
+    </Panel>
+</Panel>

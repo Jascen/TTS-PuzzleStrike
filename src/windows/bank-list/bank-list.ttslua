@@ -1,0 +1,26 @@
+bankList = {}
+
+bankList.chipKeys = {}
+
+function bankList.setChip(number, key)
+    for _, color in pairs(constants.player_colors) do
+        UI.setAttribute(color .. "_bank_chip_" .. number, "image", key)
+    end
+end
+
+function bankList.toggle(color)
+    local opened = UI.getAttribute(color .. "_BankList", "active")
+    if opened == "True" or opened == true then
+        bankList.show(color, false)
+    else
+        bankList.show(color, true)
+    end
+end
+
+function bankList.show(color, show)
+    if show == "True" or show == true then
+        UI.setAttribute(color .. "_BankList", "active", true)
+    else
+        UI.setAttribute(color .. "_BankList", "active", false)
+    end
+end

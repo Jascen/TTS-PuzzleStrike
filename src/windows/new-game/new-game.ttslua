@@ -17,7 +17,7 @@ end
 --- Initiates the process to build a bank for the provided mode
 -- mode - The bank building mode
 function newGame.startGame()
-    if game_settings.initialized == true then return end
+if game_settings.initialized == true then return end
 
     game_settings.initialized = true
 
@@ -71,6 +71,8 @@ function newGame.startGame()
     end
 
     UI.setAttribute("NewGame", "active", false)
+
+    -- Show the character lists to everyone
     local characterObject = getObjectFromGUID(constants.character_sheet)
     if characterObject ~= nil then
         for _, color in pairs(constants.player_colors) do
@@ -87,7 +89,11 @@ function newGame.buildBank_ChipRows(collection)
     for _, chip in pairs(collection) do
         item_count = item_count + 1
         sorted[item_count] = chip
+        bankList.chipKeys[item_count] = chip.key
+        bankList.setChip(item_count, chip.key)
     end
+
+    -- Sort the chips prior to laying them all out
     table.sort(sorted, utility.sortFunction)
 
     local item_width = 2.5

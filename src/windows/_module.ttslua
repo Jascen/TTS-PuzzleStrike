@@ -1,3 +1,4 @@
+require("windows/bank-list/bank-list")
 require("windows/character-list/_character-list")
 require("windows/discard/discard")
 require("windows/host/host")

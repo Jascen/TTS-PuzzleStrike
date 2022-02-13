@@ -47,15 +47,15 @@ end
 function toggleHostOptions()
     host.toggleVisibility()
 end
-  
+
 function closeSettings()
     settings.close()
 end
-  
+
 function toggleSettings()
     settings.toggleVisibility()
 end
-  
+
 function toggleEnableTools(_, value)
     settings.enableTools(value)
 end
@@ -108,4 +108,24 @@ end
 
 function discardClickYes(color)
     discard.clickYes(color)
+end
+
+function closeBankWindow_blue()
+    bankList.show("blue", false)
+end
+
+function closeBankWindow_green()
+    bankList.show("green", false)
+end
+
+function closeBankWindow_purple()
+    bankList.show("purple", false)
+end
+
+function closeBankWindow_red()
+    bankList.show("red", false)
+end
+
+function showBankWindow(player)
+    bankList.toggle(player.color)
 end

@@ -12,3 +12,7 @@
 <Include src="windows/scoreboard/scoreboard.xml"/>
 <Include src="windows/settings/settings.xml"/>
 <Include src="windows/tools/tools.xml"/>
+<Include src="windows/bank-list/blue.xml"/>
+<Include src="windows/bank-list/green.xml"/>
+<Include src="windows/bank-list/purple.xml"/>
+<Include src="windows/bank-list/red.xml"/>
