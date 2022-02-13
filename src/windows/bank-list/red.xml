@@ -1,4 +1,3 @@
-
 <Panel id="red_BankList" visibility="Red" class="Window" width="800" height="350" active="false" color="#69696940">
     <Panel class="TopBar" width="800"/>
     <Text class="WindowTitle">Bank Chips</Text>
